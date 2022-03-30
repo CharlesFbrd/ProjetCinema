@@ -48,9 +48,10 @@ public class Connexion {
 
         // récupération du résultat de l'ordre
         rsetMeta = rset.getMetaData();
+        rset.first();
 
         Film temp = new Film();
-        temp.setNom(rset.getString(1));
+        temp.setNom( rset.getString(1));
         temp.setDureeHeure(rset.getString(2));
         temp.setDureeMinute(rset.getString(3));
         temp.setDesc(rset.getString(4));
@@ -64,13 +65,14 @@ public class Connexion {
 
         // récupération du résultat de l'ordre
         rsetMeta = rset.getMetaData();
+        rset.first();
 
         Séance temp = new Séance();
-        temp.setNum(Integer.parseInt(rsetMeta.getColumnLabel(1)));
-        temp.setHoraireHeure(rsetMeta.getColumnLabel(2));
-        temp.setHoraireMinute(rsetMeta.getColumnLabel(3));
-        temp.setFilm(recupFilm(rsetMeta.getColumnLabel(4)));
-        temp.setSalle(recupSalle(Integer.parseInt(rsetMeta.getColumnLabel(5))));
+        temp.setNum(rset.getInt(1));
+        temp.setHoraireHeure(rset.getString(2));
+        temp.setHoraireMinute(rset.getString(3));
+        temp.setFilm(recupFilm(rset.getString(4)));
+        temp.setSalle(recupSalle(rset.getInt(5)));
         return temp;
     }
 
@@ -80,13 +82,14 @@ public class Connexion {
 
         // récupération du résultat de l'ordre
         rsetMeta = rset.getMetaData();
+        rset.first();
 
         Salle temp = new Salle();
-        temp.setNum(Integer.parseInt(rsetMeta.getColumnLabel(1)));
-        temp.ajouterSeance(recupSeance(Integer.parseInt(rsetMeta.getColumnLabel(2))));
-        temp.ajouterSeance(recupSeance(Integer.parseInt(rsetMeta.getColumnLabel(3))));
-        temp.ajouterSeance(recupSeance(Integer.parseInt(rsetMeta.getColumnLabel(4))));
-        temp.ajouterSeance(recupSeance(Integer.parseInt(rsetMeta.getColumnLabel(5))));
+        temp.setNum(rset.getInt(1));
+        temp.ajouterSeance(recupSeance(rset.getInt(2)));
+        temp.ajouterSeance(recupSeance(rset.getInt(3)));
+        temp.ajouterSeance(recupSeance(rset.getInt(4)));
+        temp.ajouterSeance(recupSeance(rset.getInt(5)));
         return temp;
     }
 
