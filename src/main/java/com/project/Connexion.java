@@ -94,7 +94,7 @@ public class Connexion {
     }
 
     public void ecrireFilm(String nom, int dureeh, int dureem, String desc, String image) throws SQLException {
-        stmt.executeUpdate("INSERT INTO  `FILM` (`Nom`, `Heure`, `Minute`, `Description`) VALUES ("+"'"+nom+"',"+"'"+dureeh+"',"+"'"+dureem+"',"+"'"+desc+"',"+"'"+image+".jpeg"+"');");
+        stmt.executeUpdate("INSERT INTO  `FILM` (`Nom`, `Heure`, `Minute`, `Description`) VALUES ("+"'"+nom+"',"+"'"+dureeh+"',"+"'"+dureem+"',"+"'"+desc+"',"+"'"+image+".png"+"');");
     }
     public void ecrireSeance(int num, int horaireh, int horairem, String nomFilm, int numSalle) throws SQLException {
         stmt.executeUpdate("INSERT INTO  `SEANCE` (`NumSeance`, `Heure`, `Minute`, `NomFilm`, `NumSalle`) VALUES  ("+"'"+num+"',"+"'"+horaireh+"',"+"'"+horairem+"',"+"'"+nomFilm+"',"+numSalle+"');");
