@@ -11,3 +11,6 @@ public class Main {
         System.out.println(filmtest.getNom()+filmtest.getDureeHeure()+filmtest.getDureeMinute()+filmtest.getDesc()+filmtest.getImage());
     }
 }
+
+
+//// Hi
