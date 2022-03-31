@@ -57,6 +57,7 @@ public class Fenetre {
     JTextField Pw = new JTextField();
     JButton retour2 = new JButton("Retour");
     JButton seConnecter2 = new JButton("Connexion");
+    JComboBox categorie = new JComboBox();
     //////////////////////////////////
 
     ///FENETRE ACCUEIL///////////////
@@ -300,7 +301,7 @@ public class Fenetre {
         creation.setBackground(jaunePale);
 
         gbc.weightx = 3;
-        gbc.weighty = 5;
+        gbc.weighty = 7;
         retour.setBackground(jaune);
         retour.setForeground(Color.BLACK);
         retour.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
@@ -309,6 +310,10 @@ public class Fenetre {
         creer.setForeground(Color.BLACK);
         creer.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         creer.setFont(new Font("Arial", Font.BOLD, 20));
+        categorie.addItem("Regulier");
+        categorie.addItem("Senior");
+        categorie.addItem("Enfant");
+        categorie.setBackground(jaune);
 
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.gridx = 1;
@@ -317,17 +322,24 @@ public class Fenetre {
         gbc.ipady = 30;
         creation.add(petitLogo, gbc);
 
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.ipadx = 100;
+        gbc.ipady = 15;
+        creation.add(categorie, gbc);
+
 
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.ipadx = 100;
         gbc.ipady = 15;
         creation.add(nom, gbc);
 
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.ipadx = 200;
         gbc.ipady = 15;
         creation.add(Nom, gbc);
@@ -335,56 +347,56 @@ public class Fenetre {
 
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.gridx = 1;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.ipadx = 100;
         gbc.ipady = 15;
         creation.add(prenom, gbc);
 
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.gridx = 1;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.ipadx = 200;
         gbc.ipady = 15;
         creation.add(Prenom, gbc);
 
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.gridx = 1;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.ipadx = 100;
         gbc.ipady = 15;
         creation.add(identifiant, gbc);
 
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.gridx = 1;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.ipadx = 200;
         gbc.ipady = 15;
         creation.add(id, gbc);
 
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.gridx = 1;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         gbc.ipadx = 100;
         gbc.ipady = 15;
         creation.add(motDePasse, gbc);
 
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.gridx = 1;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         gbc.ipadx = 200;
         gbc.ipady = 15;
         creation.add(mdp, gbc);
 
         gbc.anchor = GridBagConstraints.EAST;
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 6;
         gbc.ipadx = 100;
         gbc.ipady = 30;
         creation.add(retour,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 2;
-        gbc.gridy = 4;
+        gbc.gridy = 6;
         gbc.ipadx = 100;
         gbc.ipady = 30;
         creation.add(creer,gbc);
@@ -409,7 +421,8 @@ public class Fenetre {
             public void actionPerformed(ActionEvent evt){
                 fenetreCreationCompte.setVisible(false);
                 try {
-                    maconnexion.ecrireClientMembre(Nom.getText(), Prenom.getText(), id.getText(), mdp.getText());
+                    System.out.println((String) categorie.getItemAt(categorie.getSelectedIndex()));
+                    maconnexion.ecrireClientMembre(Nom.getText(), Prenom.getText(), (String) categorie.getItemAt(categorie.getSelectedIndex()), id.getText(), mdp.getText());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -566,8 +579,31 @@ public class Fenetre {
         });
         seConnecter2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
-                fenetreDeConnexion.setVisible(false);
-                fenetreChoix.setVisible(true);
+                try {
+                    testConnexion = maconnexion.connexionMembre(Id.getText(), Pw.getText());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                if(testConnexion == true){
+                    fenetreDeConnexion.setVisible(false);
+                    fenetreAcceuil.setVisible(true);
+                }else{
+                    JLabel mdpFaux = new JLabel("Identifiant ou Mot de passe incorrect!");
+                    mdpFaux.setFont(new Font("Arial", Font.BOLD, 15));
+                    mdpFaux.setBackground(jaunePale);
+                    mdpFaux.setForeground(Color.RED);
+                    gbc.anchor = GridBagConstraints.CENTER;
+                    gbc.weightx = 3;
+                    gbc.weighty = 3;
+                    gbc.gridx = 1;
+                    gbc.gridy = 2;
+                    gbc.ipadx = 100;
+                    gbc.ipady = 15;
+                    connecter.add(mdpFaux,gbc);
+                    fenetreDeConnexion.setVisible(false);
+                    fenetreDeConnexion.getContentPane().add(connecter, BorderLayout.CENTER);
+                    fenetreDeConnexion.setVisible(true);
+                }
             }
 
         });

@@ -105,17 +105,18 @@ public class Connexion {
     public void ecrireBillet(int num, int prix, int reduc, int numSeance, int nomClient) throws SQLException {
         stmt.executeUpdate("INSERT INTO  `BILLET` (`Num`, `Prix`, `Reduction`, `NumSeance`, `NomClient`) VALUES  ("+"'"+num+"',"+"'"+prix+"',"+"'"+reduc+"',"+"'"+numSeance+"',"+nomClient+"');");
     }
-    public void ecrireClientMembre(String nom, String prenom, String ID, String PW) throws SQLException {
-        stmt.executeUpdate("INSERT INTO  `MEMBRE` (`Nom`, `Prenom`, `ID`, `PW`) VALUES  ("+"'"+nom+"',"+"'"+prenom+"',"+"'"+ID+"',"+"'"+PW+"');");
+    public void ecrireClientMembre(String nom, String prenom, String categorie, String ID, String PW) throws SQLException {
+        stmt.executeUpdate("INSERT INTO  `MEMBRE` (`Nom`, `Prenom`, `Categorie`, `ID`, `PW`) VALUES  ("+"'"+nom+"',"+"'"+prenom+"',"+"'"+categorie+"',"+"'"+ID+"',"+"'"+PW+"');");
     }
 
     public boolean connexionMembre(String id, String pw) throws SQLException {
         // récupération de l'ordre de la requete
-        rset = stmt.executeQuery("select 'PW' from `MEMBRE` where `ID`='"+id+"'");
+        rset = stmt.executeQuery("select * from `MEMBRE` where `ID`='"+id+"'");
 
         // récupération du résultat de l'ordre
         rsetMeta = rset.getMetaData();
-        if(rsetMeta.getColumnLabel(1)==pw){
+        rset.first();
+        if(pw.equals(rset.getString(5))){
             return true;
         }
         else{
@@ -123,8 +124,8 @@ public class Connexion {
         }
     }
 
-    public void creationMembre(String nom, String prenom, String ID, String PW) throws SQLException {
-        ecrireClientMembre(nom,prenom,ID,PW);
+    public void creationMembre(String nom, String prenom, String categorie, String ID, String PW) throws SQLException {
+        ecrireClientMembre(nom,prenom, categorie, ID, PW);
     }
 
     /**
