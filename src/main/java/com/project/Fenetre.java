@@ -127,10 +127,28 @@ public class Fenetre {
     JLabel logo5 = new JLabel(imageC4, JLabel.CENTER);
     /////////////////////////////////////////////
 
+    ///FENETRE FACTURE///////////////////////////
+    JFrame fenetreFacture = new JFrame();
+    JPanel facture = new JPanel();
+    JLabel imageF = new JLabel();
+    JLabel nomF = new JLabel();
+    JLabel dureeF = new JLabel();
+    JLabel descF = new JLabel();
+    JLabel prix = new JLabel();
+    JLabel reductionF = new JLabel();
+    JLabel prixFinal = new JLabel();
+    JLabel nbBillet = new JLabel("Nb de billet : ", JLabel.CENTER);
+    JSpinner nbBillets = new JSpinner();
+    JButton acheter = new JButton("Acheter");
+    JButton retour3 = new JButton("Retour");
+    /////////////////////////////////////////////
+
+
     Client client = new Client();
     ClientMembre clientMembre = new ClientMembre();
     boolean testConnexion = false;
     int reduction = 0;
+    Billet billetTemp = new Billet(0,0,0,"Default","0");
 
     public Fenetre() throws SQLException, ClassNotFoundException {
 
@@ -274,6 +292,7 @@ public class Fenetre {
             }
         });
         fenetreChoix.setVisible(false);
+
         creerCompte.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
                 fenetreChoix.setVisible(false);
@@ -586,6 +605,20 @@ public class Fenetre {
                 }
                 if(testConnexion == true){
                     fenetreDeConnexion.setVisible(false);
+                    try {
+                        clientMembre = maconnexion.recupClient(Id.getText());
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    if(clientMembre.getCategorie().equals("Regulier")){
+                        reduction = 5;
+                    }
+                    if(clientMembre.getCategorie().equals("Senior")){
+                        reduction = 3;
+                    }
+                    if(clientMembre.getCategorie().equals("Enfant")){
+                        reduction = 3;
+                    }
                     fenetreAcceuil.setVisible(true);
                 }else{
                     JLabel mdpFaux = new JLabel("Identifiant ou Mot de passe incorrect!");
@@ -1147,6 +1180,145 @@ public class Fenetre {
             }
         });
         fenetreAcceuil.setVisible(false);
+        fenetreFacture.setLayout(new BorderLayout());
+        fenetreFacture.setBackground(jaunePale);
+        fenetreFacture.setBounds(0, 0, 800, 700);
+        fenetreFacture.setTitle("Cinema UGECE Paris");
+        fenetreFacture.setResizable(true);
+        facture.setLayout(new GridBagLayout());
+        facture.setBackground(jaunePale);
+        gbc.weightx = 3;
+        gbc.weighty = 6;
+        nomF.setFont(new Font("Arial", Font.BOLD, 15));
+        dureeF.setFont(new Font("Arial", Font.BOLD, 15));
+        descF.setFont(new Font("Arial", Font.BOLD, 15));
+        prix.setFont(new Font("Arial", Font.BOLD, 15));
+        prix.setText("Prix : 10");
+        reductionF.setFont(new Font("Arial", Font.BOLD, 15));
+        int temp = 10 -reduction;
+        prixFinal.setFont(new Font("Arial", Font.BOLD, 15));
+        nbBillet.setFont(new Font("Arial", Font.BOLD, 15));
+        acheter.setBackground(jaune);
+        acheter.setForeground(Color.BLACK);
+        acheter.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        acheter.setFont(new Font("Arial", Font.BOLD, 20));
+        retour3.setBackground(jaune);
+        retour3.setForeground(Color.BLACK);
+        retour3.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        retour3.setFont(new Font("Arial", Font.BOLD, 20));
+
+        Seance1F1.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F1.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F1.getNom());
+                dureeF.setText("Duree : "+F1.getDureeHeure()+"h"+F1.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 60;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 2;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance("1");
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance("1");
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+        retour3.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreFacture.setVisible(false);
+            }
+
+        });
+        acheter.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                try {
+                    maconnexion.ecrireBillet(billetTemp.getNum(), billetTemp.getPrix(), billetTemp.getReduc(), billetTemp.getSeance(), billetTemp.getClient());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                fenetreFacture.setVisible(false);
+                fenetreChoix.setVisible(true);
+            }
+
+        });
+
 
 
 

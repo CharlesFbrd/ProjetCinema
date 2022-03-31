@@ -93,6 +93,23 @@ public class Connexion {
         return temp;
     }
 
+    public ClientMembre recupClient(String id) throws SQLException{
+        // récupération de l'ordre de la requete
+        rset = stmt.executeQuery("select * from `MEMBRE` where `ID`='"+id+"'");
+
+        // récupération du résultat de l'ordre
+        rsetMeta = rset.getMetaData();
+        rset.first();
+
+        ClientMembre temp = new ClientMembre();
+        temp.setNom(rset.getString(1));
+        temp.setPrenom(rset.getString(2));
+        temp.setCategorie(rset.getString(3));
+        temp.setId(rset.getString(4));
+        temp.setPw(rset.getString(5));
+        return temp;
+    }
+
     public void ecrireFilm(String nom, int dureeh, int dureem, String desc, String image) throws SQLException {
         stmt.executeUpdate("INSERT INTO  `FILM` (`Nom`, `Heure`, `Minute`, `Description`) VALUES ("+"'"+nom+"',"+"'"+dureeh+"',"+"'"+dureem+"',"+"'"+desc+"',"+"'"+image+".png"+"');");
     }
@@ -102,7 +119,7 @@ public class Connexion {
     public void ecrireSalle(int num, int s1, int s2, int s3, int s4) throws SQLException {
         stmt.executeUpdate("INSERT INTO  `SALLE` (`NumSalle`, `NumSeance1`, `NumSeance2`, `NumSeance3`, `NumSeance4`) VALUES  ("+"'"+num+"',"+"'"+s1+"',"+"'"+s2+"',"+"'"+s3+"',"+s4+"');");
     }
-    public void ecrireBillet(int num, int prix, int reduc, int numSeance, int nomClient) throws SQLException {
+    public void ecrireBillet(int num, int prix, int reduc, String numSeance, String nomClient) throws SQLException {
         stmt.executeUpdate("INSERT INTO  `BILLET` (`Num`, `Prix`, `Reduction`, `NumSeance`, `NomClient`) VALUES  ("+"'"+num+"',"+"'"+prix+"',"+"'"+reduc+"',"+"'"+numSeance+"',"+nomClient+"');");
     }
     public void ecrireClientMembre(String nom, String prenom, String categorie, String ID, String PW) throws SQLException {
@@ -126,120 +143,5 @@ public class Connexion {
 
     public void creationMembre(String nom, String prenom, String categorie, String ID, String PW) throws SQLException {
         ecrireClientMembre(nom,prenom, categorie, ID, PW);
-    }
-
-    /**
-     * Méthode qui ajoute la table en parametre dans son ArrayList
-     *
-     * @param table
-     */
-    public void ajouterTable(String table) {
-        tables.add(table);
-    }
-
-    /**
-     * Méthode qui ajoute la requete de selection en parametre dans son
-     * ArrayList
-     *
-     * @param requete
-     */
-    public void ajouterRequete(String requete) {
-        requetes.add(requete);
-    }
-
-    /**
-     * Méthode qui ajoute la requete de MAJ en parametre dans son
-     * ArrayList
-     *
-     * @param requete
-     */
-    public void ajouterRequeteMaj(String requete) {
-        requetesMaj.add(requete);
-    }
-
-    /**
-     * Méthode qui retourne l'ArrayList des champs de la table en parametre
-     *
-     * @param table
-     * @return
-     * @throws java.sql.SQLException
-     */
-    public ArrayList remplirChampsTable(String table) throws SQLException {
-        // récupération de l'ordre de la requete
-        rset = stmt.executeQuery("select * from " + table);
-
-        // récupération du résultat de l'ordre
-        rsetMeta = rset.getMetaData();
-
-        // calcul du nombre de colonnes du resultat
-        int nbColonne = rsetMeta.getColumnCount();
-
-        // creation d'une ArrayList de String
-        ArrayList<String> liste;
-        liste = new ArrayList<>();
-        String champs = "";
-        // Ajouter tous les champs du resultat dans l'ArrayList
-        for (int i = 0; i < nbColonne; i++) {
-            champs = champs + " " + rsetMeta.getColumnLabel(i + 1);
-        }
-
-        // ajouter un "\n" à la ligne des champs
-        champs = champs + "\n";
-
-        // ajouter les champs de la ligne dans l'ArrayList
-        liste.add(champs);
-
-        // Retourner l'ArrayList
-        return liste;
-    }
-
-    /**
-     * Methode qui retourne l'ArrayList des champs de la requete en parametre
-     * @param requete
-     * @return
-     * @throws java.sql.SQLException
-     */
-    public ArrayList remplirChampsRequete(String requete) throws SQLException {
-        // récupération de l'ordre de la requete
-        rset = stmt.executeQuery(requete);
-
-        // récupération du résultat de l'ordre
-        rsetMeta = rset.getMetaData();
-
-        // calcul du nombre de colonnes du resultat
-        int nbColonne = rsetMeta.getColumnCount();
-
-        // creation d'une ArrayList de String
-        ArrayList<String> liste;
-        liste = new ArrayList<>();
-
-        // tant qu'il reste une ligne
-        while (rset.next()) {
-            String champs;
-            champs = rset.getString(1); // ajouter premier champ
-
-            // Concatener les champs de la ligne separes par ,
-            for (int i = 1; i < nbColonne; i++) {
-                champs = champs + "," + rset.getString(i + 1);
-            }
-
-            // ajouter un "\n" à la ligne des champs
-            champs = champs + "\n";
-
-            // ajouter les champs de la ligne dans l'ArrayList
-            liste.add(champs);
-        }
-
-        // Retourner l'ArrayList
-        return liste;
-    }
-
-    /**
-     * Méthode qui execute une requete de MAJ en parametre
-     * @param requeteMaj
-     * @throws java.sql.SQLException
-     */
-    public void executeUpdate(String requeteMaj) throws SQLException {
-        stmt.executeUpdate(requeteMaj);
     }
 }

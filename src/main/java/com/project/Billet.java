@@ -4,15 +4,19 @@ public class Billet {
     private int num;
     private int prix;
     private int reduction;
-    private Client client;
-    private Séance séance;
+    private String client;
+    private String séance;
 
-    public Billet(int num, int p, int r, Client c, Séance s){
+    public Billet(int num, int p, int r, String c, String s){
         this.num = num;
         this.reduction = r;
         this.prix = p-r;
         this.client = c;
         this.séance = s;
+    }
+
+    public int getNum(){
+        return num;
     }
 
     public int getPrix(){
@@ -23,12 +27,16 @@ public class Billet {
         return reduction;
     }
 
-    public Client getClient(){
+    public String getClient(){
         return client;
     }
 
-    public Séance getSeance(){
+    public String getSeance(){
         return séance;
+    }
+
+    public void setNum(int n){
+        num = n;
     }
 
     public void setPrix(int p){
@@ -39,11 +47,11 @@ public class Billet {
         reduction = r;
     }
 
-    public void setClient(Client c){
+    public void setClient(String c){
         client = c;
     }
 
-    public void setSeance(Séance s){
+    public void setSeance(String s){
         séance = s;
     }
 }
