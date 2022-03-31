@@ -106,7 +106,7 @@ public class Connexion {
         stmt.executeUpdate("INSERT INTO  `BILLET` (`Num`, `Prix`, `Reduction`, `NumSeance`, `NomClient`) VALUES  ("+"'"+num+"',"+"'"+prix+"',"+"'"+reduc+"',"+"'"+numSeance+"',"+nomClient+"');");
     }
     public void ecrireClientMembre(String nom, String prenom, String ID, String PW) throws SQLException {
-        stmt.executeUpdate("INSERT INTO  `CLIENT` (`Nom`, `Prenom`, `ID`, `PW`) VALUES  ("+"'"+nom+"',"+"'"+prenom+"',"+"'"+ID+"',"+"'"+PW+"');");
+        stmt.executeUpdate("INSERT INTO  `MEMBRE` (`Nom`, `Prenom`, `ID`, `PW`) VALUES  ("+"'"+nom+"',"+"'"+prenom+"',"+"'"+ID+"',"+"'"+PW+"');");
     }
 
     public boolean connexionMembre(String id, String pw) throws SQLException {

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.*;
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.*;
 
 public class Fenetre {
     private Connexion maconnexion = new Connexion("projet", "root","root");;
@@ -114,6 +115,21 @@ public class Fenetre {
     JButton Seance2F8 = new JButton("12h30");
     JButton Seance3F8 = new JButton("16h30");
     JButton Seance4F8 = new JButton("20h30");
+    /////////////////////////////////////////////
+
+    ///FENETRE CONFIRMATION CREATION COMPTE//////
+    JFrame fenetreConfirmationCreationCompte = new JFrame();
+    JPanel confirmation = new JPanel();
+    JLabel confirmationCreation = new JLabel("Votre compte a bien été crée!", JLabel.CENTER);
+    JButton ok = new JButton("OK");
+    ImageIcon imageC4 = new ImageIcon("Logo.png");
+    JLabel logo5 = new JLabel(imageC4, JLabel.CENTER);
+    /////////////////////////////////////////////
+
+    Client client = new Client();
+    ClientMembre clientMembre = new ClientMembre();
+    boolean testConnexion = false;
+    int reduction = 0;
 
     public Fenetre() throws SQLException, ClassNotFoundException {
 
@@ -181,7 +197,29 @@ public class Fenetre {
                 System.exit(0); // tout fermer												System.exit(0); // tout fermer
             }
         });
-        fenetrePrincipale.setVisible(false);
+        fenetrePrincipale.setVisible(true);
+
+        Invite.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetrePrincipale.setVisible(false);
+                fenetreAcceuil.setVisible(true);
+            }
+
+        });
+        Membre.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetrePrincipale.setVisible(false);
+                fenetreChoix.setVisible(true);
+            }
+
+        });
+        /*Administrateur.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetrePrincipale.setVisible(false);
+                fenetreAdmin.setVisible(true);
+            }
+
+        });*/
         //////////////////////////////////
 
         ///FENETRE CHOIX//////////////////
@@ -235,6 +273,20 @@ public class Fenetre {
             }
         });
         fenetreChoix.setVisible(false);
+        creerCompte.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreChoix.setVisible(false);
+                fenetreCreationCompte.setVisible(true);
+            }
+
+        });
+        seConnecter.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreChoix.setVisible(false);
+                fenetreDeConnexion.setVisible(true);
+            }
+
+        });
         ////////////////////////////////
 
         ///FENETRE CREATION COMPTE//////
@@ -346,7 +398,83 @@ public class Fenetre {
             }
         });
         fenetreCreationCompte.setVisible(false);
+        retour.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreCreationCompte.setVisible(false);
+                fenetreChoix.setVisible(true);
+            }
+
+        });
+        creer.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreCreationCompte.setVisible(false);
+                try {
+                    maconnexion.ecrireClientMembre(Nom.getText(), Prenom.getText(), id.getText(), mdp.getText());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                fenetreConfirmationCreationCompte.setVisible(true);
+            }
+
+        });
         ///////////////////////////////////////
+
+        ///FENETRE CONFIRMATION CREATION COMPTE///
+        fenetreConfirmationCreationCompte.setLayout(new BorderLayout());
+        fenetreConfirmationCreationCompte.setBackground(jaunePale);
+        fenetreConfirmationCreationCompte.setBounds(0, 0, 800, 700);
+        fenetreConfirmationCreationCompte.setTitle("Cinema UGECE Paris");
+        fenetreConfirmationCreationCompte.setResizable(true);
+
+        confirmation.setLayout(new GridBagLayout());
+        confirmation.setBackground(jaunePale);
+
+        gbc.weightx = 3;
+        gbc.weighty = 3;
+        ok.setBackground(jaune);
+        ok.setForeground(Color.BLACK);
+        ok.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        ok.setFont(new Font("Arial", Font.BOLD, 20));
+        confirmationCreation.setFont(new Font("Arial", Font.BOLD, 20));
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.ipadx = 140;
+        gbc.ipady = 30;
+        confirmation.add(logo5, gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.ipadx = 300;
+        gbc.ipady = 30;
+        confirmation.add(confirmationCreation, gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.ipadx = 200;
+        gbc.ipady = 15;
+        confirmation.add(ok, gbc);
+
+        fenetreConfirmationCreationCompte.getContentPane().add(confirmation, BorderLayout.CENTER);
+
+        fenetreConfirmationCreationCompte.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent evt) {
+                System.exit(0); // tout fermer												System.exit(0); // tout fermer
+            }
+        });
+        fenetreConfirmationCreationCompte.setVisible(false);
+
+        ok.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreConfirmationCreationCompte.setVisible(false);
+                fenetrePrincipale.setVisible(true);
+            }
+
+        });
 
         ///FENETRE DE CONNEXION////////////////
         fenetreDeConnexion.setLayout(new BorderLayout());
@@ -429,6 +557,20 @@ public class Fenetre {
             }
         });
         fenetreDeConnexion.setVisible(false);
+        retour2.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreDeConnexion.setVisible(false);
+                fenetreChoix.setVisible(true);
+            }
+
+        });
+        seConnecter2.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreDeConnexion.setVisible(false);
+                fenetreChoix.setVisible(true);
+            }
+
+        });
 
 
         ///FENETRE ACCUEIL//////////////////
@@ -968,7 +1110,7 @@ public class Fenetre {
                 System.exit(0); // tout fermer												System.exit(0); // tout fermer
             }
         });
-        fenetreAcceuil.setVisible(true);
+        fenetreAcceuil.setVisible(false);
 
 
 
