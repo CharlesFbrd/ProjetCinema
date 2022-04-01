@@ -39,8 +39,8 @@ public class Client {
         billets = b;
     }
 
-    public void setBillet(int i, Billet b){
-        billets.set(i,b);
+    public void setBillet(Billet b){
+        billets.add(b);
     }
 }
 

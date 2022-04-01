@@ -133,7 +133,7 @@ public class Fenetre {
     JLabel imageF = new JLabel();
     JLabel nomF = new JLabel();
     JLabel dureeF = new JLabel();
-    JLabel descF = new JLabel();
+    JTextArea descF = new JTextArea();
     JLabel prix = new JLabel();
     JLabel reductionF = new JLabel();
     JLabel prixFinal = new JLabel();
@@ -143,12 +143,21 @@ public class Fenetre {
     JButton retour3 = new JButton("Retour");
     /////////////////////////////////////////////
 
+    ///FENETRE DE CONFIRMATION D ACHAT///////////
+    JFrame fenetreConfirmationAchat = new JFrame();
+    JPanel achat = new JPanel();
+    JLabel confirmationAchat = new JLabel("Merci pour votre achat!", JLabel.CENTER);
+    JButton ok2 = new JButton("OK");
+    ImageIcon imageC5 = new ImageIcon("Logo.png");
+    JLabel logo6 = new JLabel(imageC5, JLabel.CENTER);
+    /////////////////////////////////////////////
+
 
     Client client = new Client();
     ClientMembre clientMembre = new ClientMembre();
     boolean testConnexion = false;
     int reduction = 0;
-    Billet billetTemp = new Billet(0,0,0,"Default","0");
+    Billet billetTemp = new Billet(0,0,0,0,"Default");
 
     public Fenetre() throws SQLException, ClassNotFoundException {
 
@@ -507,6 +516,7 @@ public class Fenetre {
             }
 
         });
+        ////////////////////////////////////////////////////////////
 
         ///FENETRE DE CONNEXION////////////////
         fenetreDeConnexion.setLayout(new BorderLayout());
@@ -612,12 +622,15 @@ public class Fenetre {
                     }
                     if(clientMembre.getCategorie().equals("Regulier")){
                         reduction = 5;
+                        System.out.println(reduction);
                     }
                     if(clientMembre.getCategorie().equals("Senior")){
                         reduction = 3;
+                        System.out.println(reduction);
                     }
                     if(clientMembre.getCategorie().equals("Enfant")){
-                        reduction = 3;
+                        reduction = 6;
+                        System.out.println(reduction);
                     }
                     fenetreAcceuil.setVisible(true);
                 }else{
@@ -640,17 +653,75 @@ public class Fenetre {
             }
 
         });
+        /////////////////////////////////////////////////////////////
+
+        ///FENETRE CONFIRMATION ACHAT///
+        fenetreConfirmationAchat.setLayout(new BorderLayout());
+        fenetreConfirmationAchat.setBackground(jaunePale);
+        fenetreConfirmationAchat.setBounds(0, 0, 800, 700);
+        fenetreConfirmationAchat.setTitle("Cinema UGECE Paris");
+        fenetreConfirmationAchat.setResizable(true);
+
+        achat.setLayout(new GridBagLayout());
+        achat.setBackground(jaunePale);
+
+        gbc.weightx = 3;
+        gbc.weighty = 3;
+        ok2.setBackground(jaune);
+        ok2.setForeground(Color.BLACK);
+        ok2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        ok2.setFont(new Font("Arial", Font.BOLD, 20));
+        confirmationAchat.setFont(new Font("Arial", Font.BOLD, 20));
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.ipadx = 140;
+        gbc.ipady = 30;
+        achat.add(logo6, gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.ipadx = 300;
+        gbc.ipady = 30;
+        achat.add(confirmationAchat, gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.ipadx = 200;
+        gbc.ipady = 15;
+        achat.add(ok2, gbc);
+
+        fenetreConfirmationAchat.getContentPane().add(achat, BorderLayout.CENTER);
+
+        fenetreConfirmationAchat.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent evt) {
+                System.exit(0); // tout fermer												System.exit(0); // tout fermer
+            }
+        });
+        fenetreConfirmationAchat.setVisible(false);
+
+        ok2.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreConfirmationAchat.setVisible(false);
+                fenetreAcceuil.setVisible(true);
+            }
+
+        });
 
 
         ///FENETRE ACCUEIL//////////////////
         F1 = maconnexion.recupFilm("Avatar");
         F2 = maconnexion.recupFilm("Avengers: EndGame");
-        F3 = maconnexion.recupFilm("Jurassic World");
-        F4 = maconnexion.recupFilm("Le Roi Lion");
+        F3 = maconnexion.recupFilm("Titanic");
+        F4 = maconnexion.recupFilm("Star Wars VII: Le Réveil de la Force");
         F5 = maconnexion.recupFilm("Spider-Man: No Way Home");
-        F6 = maconnexion.recupFilm("Star Wars VII: Le Réveil de la Force");
-        F7 = maconnexion.recupFilm("The Dark Knight : Le Chevalier Noir");
-        F8 = maconnexion.recupFilm("Titanic");
+        F6 = maconnexion.recupFilm("Le Roi Lion");
+        F7 = maconnexion.recupFilm("Jurassic World");
+        F8 = maconnexion.recupFilm("The Dark Knight : Le Chevalier Noir");
 
         JLabel nomF1 = new JLabel(F1.getNom(), JLabel.CENTER);
         JLabel nomF2 = new JLabel(F2.getNom(), JLabel.CENTER);
@@ -1192,6 +1263,8 @@ public class Fenetre {
         nomF.setFont(new Font("Arial", Font.BOLD, 15));
         dureeF.setFont(new Font("Arial", Font.BOLD, 15));
         descF.setFont(new Font("Arial", Font.BOLD, 15));
+        descF.setEditable(false);
+        descF.setBackground(jaunePale);
         prix.setFont(new Font("Arial", Font.BOLD, 15));
         prix.setText("Prix : 10");
         reductionF.setFont(new Font("Arial", Font.BOLD, 15));
@@ -1207,6 +1280,7 @@ public class Fenetre {
         retour3.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         retour3.setFont(new Font("Arial", Font.BOLD, 20));
 
+
         Seance1F1.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
                 ImageIcon imagetemp = new ImageIcon(F1.getImage());
@@ -1214,6 +1288,7 @@ public class Fenetre {
                 nomF.setText(F1.getNom());
                 dureeF.setText("Duree : "+F1.getDureeHeure()+"h"+F1.getDureeMinute());
                 reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F1.getDesc());
                 int temp = 10 -reduction;
                 temp *= (int) nbBillets.getValue();
                 prixFinal.setText("Prix Total : "+String.valueOf(temp));
@@ -1221,7 +1296,7 @@ public class Fenetre {
                 gbc.gridx = 0;
                 gbc.gridy = 0;
                 gbc.gridwidth = 1;
-                gbc.ipadx = 60;
+                gbc.ipadx = 100;
                 gbc.ipady = 10;
                 facture.add(imageF, gbc);
                 gbc.anchor = GridBagConstraints.NORTHWEST;
@@ -1230,19 +1305,27 @@ public class Fenetre {
                 gbc.ipadx = 50;
                 gbc.ipady = 15;
                 facture.add(nomF, gbc);
-                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.anchor = GridBagConstraints.NORTH;
                 gbc.gridx = 1;
                 gbc.gridy = 0;
                 gbc.ipadx = 50;
                 gbc.ipady = 15;
                 facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
                 gbc.anchor = GridBagConstraints.NORTHWEST;
                 gbc.gridx = 1;
                 gbc.gridy = 1;
-                gbc.ipadx = 50;
+                gbc.ipadx = 10;
                 gbc.ipady = 15;
                 facture.add(nbBillet, gbc);
-                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
                 facture.add(nbBillets, gbc);
                 gbc.anchor = GridBagConstraints.NORTH;
                 gbc.gridx = 1;
@@ -1266,7 +1349,7 @@ public class Fenetre {
                 gbc.ipady = 30;
                 gbc.anchor = GridBagConstraints.CENTER;
                 facture.add(retour3, gbc);
-                gbc.gridx = 2;
+                gbc.gridx = 1;
                 gbc.gridy = 5;
                 gbc.ipadx = 100;
                 gbc.ipady = 30;
@@ -1277,13 +1360,13 @@ public class Fenetre {
                     billetTemp.setPrix(10);
                     billetTemp.setReduc(reduction);
                     billetTemp.setClient(clientMembre.getNom());
-                    billetTemp.setSeance("1");
+                    billetTemp.setSeance(1);
                 }else{
                     billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
                     billetTemp.setPrix(10);
                     billetTemp.setReduc(reduction);
                     billetTemp.setClient(client.getNom());
-                    billetTemp.setSeance("1");
+                    billetTemp.setSeance(1);
 
                 }
 
@@ -1300,6 +1383,3201 @@ public class Fenetre {
             }
 
         });
+
+        Seance2F1.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F1.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F1.getNom());
+                dureeF.setText("Duree : "+F1.getDureeHeure()+"h"+F1.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F1.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(9);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(9);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance3F1.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F1.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F1.getNom());
+                dureeF.setText("Duree : "+F1.getDureeHeure()+"h"+F1.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F1.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(17);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(17);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance4F1.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F1.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F1.getNom());
+                dureeF.setText("Duree : "+F1.getDureeHeure()+"h"+F1.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F1.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(25);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(25);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance1F2.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F2.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F2.getNom());
+                dureeF.setText("Duree : "+F2.getDureeHeure()+"h"+F2.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F2.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(2);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(2);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance2F2.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F2.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F2.getNom());
+                dureeF.setText("Duree : "+F2.getDureeHeure()+"h"+F2.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F2.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(10);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(10);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance3F2.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F2.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F2.getNom());
+                dureeF.setText("Duree : "+F2.getDureeHeure()+"h"+F2.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F2.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(18);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(18);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance4F2.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F2.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F2.getNom());
+                dureeF.setText("Duree : "+F2.getDureeHeure()+"h"+F2.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F2.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(26);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(26);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance1F3.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F3.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F3.getNom());
+                dureeF.setText("Duree : "+F3.getDureeHeure()+"h"+F3.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F3.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(3);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(3);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance2F3.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F3.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F3.getNom());
+                dureeF.setText("Duree : "+F3.getDureeHeure()+"h"+F3.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F3.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(11);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(11);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance3F3.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F3.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F3.getNom());
+                dureeF.setText("Duree : "+F3.getDureeHeure()+"h"+F3.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F3.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(19);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(19);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance4F3.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F3.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F3.getNom());
+                dureeF.setText("Duree : "+F3.getDureeHeure()+"h"+F3.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F3.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(27);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(27);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance1F4.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F4.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F4.getNom());
+                dureeF.setText("Duree : "+F4.getDureeHeure()+"h"+F4.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F4.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(4);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(4);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance2F4.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F4.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F4.getNom());
+                dureeF.setText("Duree : "+F4.getDureeHeure()+"h"+F4.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F4.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(12);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(12);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance3F4.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F4.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F4.getNom());
+                dureeF.setText("Duree : "+F4.getDureeHeure()+"h"+F4.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F4.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(20);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(20);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance4F4.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F4.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F4.getNom());
+                dureeF.setText("Duree : "+F4.getDureeHeure()+"h"+F4.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F4.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(28);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(28);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance1F5.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F5.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F5.getNom());
+                dureeF.setText("Duree : "+F5.getDureeHeure()+"h"+F5.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F5.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(5);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(5);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance2F5.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F5.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F5.getNom());
+                dureeF.setText("Duree : "+F5.getDureeHeure()+"h"+F5.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F5.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(13);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(13);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance3F5.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F5.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F5.getNom());
+                dureeF.setText("Duree : "+F5.getDureeHeure()+"h"+F5.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F5.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(21);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(21);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance4F5.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F5.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F5.getNom());
+                dureeF.setText("Duree : "+F5.getDureeHeure()+"h"+F5.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F5.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(29);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(29);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance1F6.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F6.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F6.getNom());
+                dureeF.setText("Duree : "+F6.getDureeHeure()+"h"+F6.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F6.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(6);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(6);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance2F6.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F6.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F6.getNom());
+                dureeF.setText("Duree : "+F6.getDureeHeure()+"h"+F6.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F6.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(14);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(14);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance3F6.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F6.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F6.getNom());
+                dureeF.setText("Duree : "+F6.getDureeHeure()+"h"+F6.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F6.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(22);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(22);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance4F6.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F6.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F6.getNom());
+                dureeF.setText("Duree : "+F6.getDureeHeure()+"h"+F6.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F6.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(30);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(30);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance1F7.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F7.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F7.getNom());
+                dureeF.setText("Duree : "+F7.getDureeHeure()+"h"+F7.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F7.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(7);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(7);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance2F7.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F7.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F7.getNom());
+                dureeF.setText("Duree : "+F7.getDureeHeure()+"h"+F7.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F7.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(15);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(15);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance3F7.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F7.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F7.getNom());
+                dureeF.setText("Duree : "+F7.getDureeHeure()+"h"+F7.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F7.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(23);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(23);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance4F7.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F7.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F7.getNom());
+                dureeF.setText("Duree : "+F7.getDureeHeure()+"h"+F7.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F7.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(32);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(32);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance1F8.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F8.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F8.getNom());
+                dureeF.setText("Duree : "+F8.getDureeHeure()+"h"+F8.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F8.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(8);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(8);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance2F8.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F8.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F8.getNom());
+                dureeF.setText("Duree : "+F8.getDureeHeure()+"h"+F8.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F8.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(16);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(16);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance3F8.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F8.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F8.getNom());
+                dureeF.setText("Duree : "+F8.getDureeHeure()+"h"+F8.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F8.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(24);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(24);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+        Seance4F8.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                ImageIcon imagetemp = new ImageIcon(F8.getImage());
+                imageF.setIcon(imagetemp);
+                nomF.setText(F8.getNom());
+                dureeF.setText("Duree : "+F8.getDureeHeure()+"h"+F8.getDureeMinute());
+                reductionF.setText("Reduction : " + String.valueOf(reduction));
+                descF.setText("Synopsis : "+F8.getDesc());
+                int temp = 10 -reduction;
+                temp *= (int) nbBillets.getValue();
+                prixFinal.setText("Prix Total : "+String.valueOf(temp));
+                gbc.anchor = GridBagConstraints.NORTHEAST;
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 1;
+                gbc.ipadx = 100;
+                gbc.ipady = 10;
+                facture.add(imageF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nomF, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(dureeF, gbc);
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 80;
+                gbc.ipady = 15;
+                facture.add(descF, gbc);
+                gbc.anchor = GridBagConstraints.NORTHWEST;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 10;
+                gbc.ipady = 15;
+                facture.add(nbBillet, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(nbBillets, gbc);
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prix, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(reductionF, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                facture.add(prixFinal, gbc);
+                gbc.gridx = 0;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(retour3, gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 5;
+                gbc.ipadx = 100;
+                gbc.ipady = 30;
+                gbc.anchor = GridBagConstraints.CENTER;
+                facture.add(acheter, gbc);
+                if(testConnexion == true){
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(clientMembre.getNom());
+                    billetTemp.setSeance(32);
+                }else{
+                    billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
+                    billetTemp.setPrix(10);
+                    billetTemp.setReduc(reduction);
+                    billetTemp.setClient(client.getNom());
+                    billetTemp.setSeance(32);
+
+                }
+
+                fenetreFacture.getContentPane().add(facture, BorderLayout.CENTER);
+
+                fenetreFacture.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFacture.setVisible(true);
+
+            }
+
+        });
+
+
         retour3.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
                 fenetreFacture.setVisible(false);
@@ -1309,18 +4587,24 @@ public class Fenetre {
         acheter.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
                 try {
-                    maconnexion.ecrireBillet(billetTemp.getNum(), billetTemp.getPrix(), billetTemp.getReduc(), billetTemp.getSeance(), billetTemp.getClient());
+                    for(int i=0; i<(int) nbBillets.getValue();i++){
+                        maconnexion.ecrireBillet(billetTemp.getNum(), billetTemp.getPrix(), billetTemp.getReduc(), billetTemp.getSeance(), billetTemp.getClient());
+                        if(testConnexion == true){
+                            clientMembre.setBillet(billetTemp);
+                        }else{
+                            client.setBillet(billetTemp);
+                        }
+                        billetTemp.setNum(billetTemp.getNum()+1);
+                    }
+
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
                 fenetreFacture.setVisible(false);
-                fenetreChoix.setVisible(true);
+                fenetreConfirmationAchat.setVisible(true);
             }
 
         });
-
-
-
-
+        //////////////////////////////////////////////////////////////
     }
 }

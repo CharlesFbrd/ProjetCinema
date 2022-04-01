@@ -5,9 +5,9 @@ public class Billet {
     private int prix;
     private int reduction;
     private String client;
-    private String séance;
+    private int séance;
 
-    public Billet(int num, int p, int r, String c, String s){
+    public Billet(int num, int p, int r, int s, String c){
         this.num = num;
         this.reduction = r;
         this.prix = p-r;
@@ -31,7 +31,7 @@ public class Billet {
         return client;
     }
 
-    public String getSeance(){
+    public int getSeance(){
         return séance;
     }
 
@@ -51,7 +51,7 @@ public class Billet {
         client = c;
     }
 
-    public void setSeance(String s){
+    public void setSeance(int s){
         séance = s;
     }
 }

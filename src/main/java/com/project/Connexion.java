@@ -114,13 +114,13 @@ public class Connexion {
         stmt.executeUpdate("INSERT INTO  `FILM` (`Nom`, `Heure`, `Minute`, `Description`) VALUES ("+"'"+nom+"',"+"'"+dureeh+"',"+"'"+dureem+"',"+"'"+desc+"',"+"'"+image+".png"+"');");
     }
     public void ecrireSeance(int num, int horaireh, int horairem, String nomFilm, int numSalle) throws SQLException {
-        stmt.executeUpdate("INSERT INTO  `SEANCE` (`NumSeance`, `Heure`, `Minute`, `NomFilm`, `NumSalle`) VALUES  ("+"'"+num+"',"+"'"+horaireh+"',"+"'"+horairem+"',"+"'"+nomFilm+"',"+numSalle+"');");
+        stmt.executeUpdate("INSERT INTO  `SEANCE` (`NumSeance`, `Heure`, `Minute`, `NomFilm`, `NumSalle`) VALUES  ("+"'"+num+"',"+"'"+horaireh+"',"+"'"+horairem+"',"+"'"+nomFilm+"','"+numSalle+"');");
     }
     public void ecrireSalle(int num, int s1, int s2, int s3, int s4) throws SQLException {
-        stmt.executeUpdate("INSERT INTO  `SALLE` (`NumSalle`, `NumSeance1`, `NumSeance2`, `NumSeance3`, `NumSeance4`) VALUES  ("+"'"+num+"',"+"'"+s1+"',"+"'"+s2+"',"+"'"+s3+"',"+s4+"');");
+        stmt.executeUpdate("INSERT INTO  `SALLE` (`NumSalle`, `NumSeance1`, `NumSeance2`, `NumSeance3`, `NumSeance4`) VALUES  ("+"'"+num+"',"+"'"+s1+"',"+"'"+s2+"',"+"'"+s3+"','"+s4+"');");
     }
-    public void ecrireBillet(int num, int prix, int reduc, String numSeance, String nomClient) throws SQLException {
-        stmt.executeUpdate("INSERT INTO  `BILLET` (`Num`, `Prix`, `Reduction`, `NumSeance`, `NomClient`) VALUES  ("+"'"+num+"',"+"'"+prix+"',"+"'"+reduc+"',"+"'"+numSeance+"',"+nomClient+"');");
+    public void ecrireBillet(int num, int prix, int reduc, int numSeance, String nomClient) throws SQLException {
+        stmt.executeUpdate("INSERT INTO  `BILLET` (`Num`, `Prix`, `Reduction`, `NumSeance`, `NomClient`) VALUES  ("+"'"+num+"',"+"'"+prix+"',"+"'"+reduc+"',"+"'"+numSeance+"','"+nomClient+"');");
     }
     public void ecrireClientMembre(String nom, String prenom, String categorie, String ID, String PW) throws SQLException {
         stmt.executeUpdate("INSERT INTO  `MEMBRE` (`Nom`, `Prenom`, `Categorie`, `ID`, `PW`) VALUES  ("+"'"+nom+"',"+"'"+prenom+"',"+"'"+categorie+"',"+"'"+ID+"',"+"'"+PW+"');");
