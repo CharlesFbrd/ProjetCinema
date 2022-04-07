@@ -1,7 +1,9 @@
 package com.project;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
 
 ///Classe permettant la connexion a notre BDD
 public class Connexion {
@@ -193,6 +195,7 @@ public class Connexion {
         }
     }
 
+
     ///Methode permettant de connaitre le film le plus vu en recuperant les numeros des seances des billets achetes
     public List<Integer> filmPopulaire() throws SQLException {
         rset = stmt.executeQuery("select `NumSeance` from `BILLET`");
@@ -244,3 +247,5 @@ public class Connexion {
 
     }
 }
+
+

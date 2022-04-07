@@ -1,4 +1,6 @@
 package com.project;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
@@ -46,6 +48,7 @@ public class Fenetre {
     JButton retour = new JButton("Retour");
     JButton creer = new JButton("Creer");
     ////////////////////////////
+
 
     ///FENETRE DE CONNEXION///////////
     JFrame fenetreDeConnexion = new JFrame();
@@ -245,6 +248,7 @@ public class Fenetre {
     Film F7 = new Film();
     Film F8 = new Film();
 
+
     JButton Seance1F1 = new JButton("8h30");
     JButton Seance2F1 = new JButton("12h30");
     JButton Seance3F1 = new JButton("16h30");
@@ -331,7 +335,7 @@ public class Fenetre {
         fenetrePrincipale.setLayout(new BorderLayout());
         fenetrePrincipale.setBackground(jaunePale);
         fenetrePrincipale.setBounds(0, 0, 800, 700);
-        fenetrePrincipale.setTitle("CineMax Paris");
+        fenetrePrincipale.setTitle("Cinema UGECE Paris");
         fenetrePrincipale.setResizable(true);
 
         ///On cree le pannel et on le set comme un Grid Bag Layout
@@ -418,6 +422,7 @@ public class Fenetre {
             }
 
         });
+
         Administrateur.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
                 fenetrePrincipale.setVisible(false);
@@ -501,7 +506,7 @@ public class Fenetre {
         fenetreCreationCompte.setLayout(new BorderLayout());
         fenetreCreationCompte.setBackground(jaunePale);
         fenetreCreationCompte.setBounds(0, 0, 800, 700);
-        fenetreCreationCompte.setTitle("CineMax Paris");
+        fenetreCreationCompte.setTitle("CineMax Paris - Création de compte");
         fenetreCreationCompte.setResizable(true);
 
         creation.setLayout(new GridBagLayout());
@@ -619,6 +624,7 @@ public class Fenetre {
             }
         });
         fenetreCreationCompte.setVisible(false);
+
         retour.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
                 ///On rend la fenetre de connexion invisible et on reaffiche celle du choix
@@ -702,11 +708,12 @@ public class Fenetre {
         });
         ////////////////////////////////////////////////////////////
 
+
         ///FENETRE DE CONNEXION////////////////
         fenetreDeConnexion.setLayout(new BorderLayout());
         fenetreDeConnexion.setBackground(jaunePale);
         fenetreDeConnexion.setBounds(0, 0, 800, 700);
-        fenetreDeConnexion.setTitle("CineMax Paris");
+        fenetreDeConnexion.setTitle("CineMax Paris - Connexion");
         fenetreDeConnexion.setResizable(true);
 
         connecter.setLayout(new GridBagLayout());
@@ -779,10 +786,11 @@ public class Fenetre {
         fenetreDeConnexion.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent evt) {
-                System.exit(0); // tout fermer												System.exit(0); // tout fermer
+                System.exit(0); // System.exit(0); // tout fermer
             }
         });
         fenetreDeConnexion.setVisible(false);
+
         retour2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
                 ///On rend la fenetre de connexion invisible et on affiche la fenetre de choix
@@ -2224,7 +2232,6 @@ public class Fenetre {
 
 
         ///FENETRE ACCUEIL//////////////////
-        ///On recupere les films depuis la base de donnée pour la affichage
         F1 = maconnexion.recupFilm("Avatar");
         F2 = maconnexion.recupFilm("Avengers: EndGame");
         F3 = maconnexion.recupFilm("Titanic");
@@ -2234,7 +2241,6 @@ public class Fenetre {
         F7 = maconnexion.recupFilm("Jurassic World");
         F8 = maconnexion.recupFilm("The Dark Knight : Le Chevalier Noir");
 
-        ///On configure e=les labels permettant l'affichage
         JLabel nomF1 = new JLabel(F1.getNom(), JLabel.CENTER);
         JLabel nomF2 = new JLabel(F2.getNom(), JLabel.CENTER);
         JLabel nomF3 = new JLabel(F3.getNom(), JLabel.CENTER);
@@ -2262,7 +2268,6 @@ public class Fenetre {
         JLabel descF7 = new JLabel("Synopsis : "+F7.getDesc(), JLabel.CENTER);
         JLabel descF8 = new JLabel("Synopsis : "+F8.getDesc(), JLabel.CENTER);
 
-        ///On va recuperer les images des films
         ImageIcon bordereau = new ImageIcon("Bordereau.png");
         JLabel logoAccueil = new JLabel(bordereau, JLabel.CENTER);
         ImageIcon imageF1 = new ImageIcon(F1.getImage());
@@ -2293,7 +2298,6 @@ public class Fenetre {
         gbc.weightx = 6;
         gbc.weighty = 5;
 
-        ///On configure les labels
         nomF1.setFont(new Font("Arial", Font.BOLD, 15));
         dureeF1.setFont(new Font("Arial", Font.BOLD, 15));
         nomF2.setFont(new Font("Arial", Font.BOLD, 15));
@@ -2311,7 +2315,6 @@ public class Fenetre {
         nomF8.setFont(new Font("Arial", Font.BOLD, 15));
         dureeF8.setFont(new Font("Arial", Font.BOLD, 15));
 
-        ///OOn configure les boutons
         Seance1F1.setBackground(jaune);
         Seance1F1.setForeground(Color.BLACK);
         Seance1F1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
@@ -2739,8 +2742,6 @@ public class Fenetre {
                 System.exit(0); // tout fermer												System.exit(0); // tout fermer
             }
         });
-
-        ///On configure tous les elements pour la fenetre de facture
         fenetreAcceuil.setVisible(false);
         fenetreFacture.setLayout(new BorderLayout());
         fenetreFacture.setBackground(jaunePale);
@@ -2774,7 +2775,6 @@ public class Fenetre {
         ///Si le client choisit la seance de 8h30 pour le premier film
         Seance1F1.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
-                ///On modifie l'affichage en fonction du client
                 ImageIcon imagetemp = new ImageIcon(F1.getImage());
                 imageF.setIcon(imagetemp);
                 nomF.setText(F1.getNom());
@@ -2847,7 +2847,6 @@ public class Fenetre {
                 gbc.ipady = 30;
                 gbc.anchor = GridBagConstraints.CENTER;
                 facture.add(acheter, gbc);
-                ///On ajoute les billets dans la BDD mais le nom du client va changer si le client est connecte ou non
                 if(testConnexion == true){
                     billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
                     billetTemp.setPrix(10);
@@ -6072,7 +6071,6 @@ public class Fenetre {
 
 
         retour3.addActionListener(new ActionListener(){
-            ///On rend invisible la fenetre de facture
             public void actionPerformed(ActionEvent evt){
                 fenetreFacture.setVisible(false);
             }
@@ -6082,10 +6080,8 @@ public class Fenetre {
             public void actionPerformed(ActionEvent evt){
                 try {
                     for(int i=0; i<(int) nbBillets.getValue();i++){
-                        ///Si le client achete on ajoute les billets a la BDD
                         maconnexion.ecrireBillet(billetTemp.getNum(), billetTemp.getPrix(), billetTemp.getReduc(), billetTemp.getSeance(), billetTemp.getClient());
                         if(testConnexion == true){
-                            ///On ajoute les billets au client
                             clientMembre.setBillet(billetTemp);
                         }else{
                             client.setBillet(billetTemp);
@@ -6096,8 +6092,6 @@ public class Fenetre {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                ///On rend invisible la fenetre de facture
-                ///On affiche la fentre de confirmation d'achat
                 fenetreFacture.setVisible(false);
                 fenetreConfirmationAchat.setVisible(true);
             }
