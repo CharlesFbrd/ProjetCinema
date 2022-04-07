@@ -1,14 +1,16 @@
 package com.project;
 import java.util.*;
-
+///Classe permettant de crer les salles
 public class Salle {
     private int numero;
     private List<Séance> seances = new ArrayList<>();
 
+    ///Constructeur par defaut
     public Salle(){
 
     }
 
+    ///Getters et Setters
     public int getNum(){
         return numero;
     }

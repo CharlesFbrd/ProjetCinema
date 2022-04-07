@@ -6,6 +6,7 @@ import java.util.*;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.List;
 
 public class Fenetre {
     private Connexion maconnexion = new Connexion("projet", "root","root");;
@@ -60,6 +61,169 @@ public class Fenetre {
     JComboBox categorie = new JComboBox();
     //////////////////////////////////
 
+    /// FENETRE - connexion en tant qu'admin
+    JFrame fenetreDeConnexionAdmin = new JFrame();
+    JPanel connecterAdmin = new JPanel();
+    ImageIcon imageConnexAdmin = new ImageIcon("Logo2.png");
+    JLabel logoConnexAdmin = new JLabel(imageConnexAdmin, JLabel.CENTER);
+    JLabel IDAdmin = new JLabel("ID : ", JLabel.CENTER);
+    JLabel PWAdmin = new JLabel("PW : ", JLabel.CENTER);
+    JTextField IdAdmin = new JTextField();
+    JTextField PwAdmin = new JTextField();
+    JButton retourConnexAdmin = new JButton("Retour");
+    JButton seConnecterAdmin = new JButton("Connexion");
+    //////////////////////////////////
+
+    ///FENETRE ADMIN -  options fonctionnalités profil employé / admin
+    JFrame fenetreAdmin = new JFrame(); // création d'un panel pour la fenêtre
+    ImageIcon imageAdmin = new ImageIcon("Logo.png"); // on charge le logo
+    JLabel logoAdmin = new JLabel(imageAdmin, JLabel.CENTER);
+    JPanel choixAdmin = new JPanel(); // création d'un panel pour les boutons
+    JButton majFilms = new JButton("Mettre à jour les films à l'affiche"); ///Mettre à jour la liste des films
+    JButton ajoutReduc = new JButton("Ajouter une offre de réduction");
+    JButton filmsPop = new JButton("Consulter les films populaires");
+    JButton dossiersClients = new JButton("Consulter le dossier d'un client");
+    JButton deconnexion = new JButton("Déconnexion");
+    ////////////////////////////////
+
+
+    ///FENETRE ADMIN -  Mettre à jour la liste des films
+    JFrame fenetreMajFilms = new JFrame(); // création d'un panel pour la fenêtre
+    ImageIcon imageMaj = new ImageIcon("Logo2.png"); // on charge le logo
+    JLabel logoMaj = new JLabel(imageMaj, JLabel.CENTER); // on crée une zone pour le logo
+    JPanel choixOptionFilm = new JPanel(); // création d'un panel pour les boutons
+    JButton ajoutFilm = new JButton("Ajouter un film");
+    JButton suppFilm = new JButton("Supprimer un film");
+    JButton retourMaj = new JButton("Retour");
+    ////////////////////////////////
+
+
+    ///FENETRE ADMIN -  Supprimer un film
+    JFrame fenetreSuppFilm = new JFrame(); // création d'un panel pour la fenêtre
+    ImageIcon imageSuppFilm = new ImageIcon("Logo2.png"); // on charge le logo
+    JLabel logoSuppFilm = new JLabel(imageSuppFilm, JLabel.CENTER); // on crée une zone pour le logo
+    JPanel pSuppFilm = new JPanel(); // création d'un panel pour les boutons
+    JLabel nomSuppFilm = new JLabel("Entrez le nom du film à supprimer des affiches : ", JLabel.CENTER);
+    JTextField entrerNomSuppFilm = new JTextField(); // création du champs pour renseigner le nom du film
+    // public String nomSuppFilm = entrerNomSuppFilm.getText();
+    JButton retourSuppFilm = new JButton("Retour");
+    JButton bSuppFilm = new JButton("Supprimer le film");
+    ////////////////////////////////
+
+    ///FENETRE CONFIRMATION SUPPRESSION FILM /////
+    JFrame fenetreConfirmationSuppFilm = new JFrame();
+    JPanel confirmationSuppFilm = new JPanel();
+    JLabel confirmationSuppressionFilm = new JLabel("Le film a bien été supprimé !", JLabel.CENTER);
+    JButton okSuppFilm = new JButton("OK");
+    ImageIcon imageConfSuppFilm = new ImageIcon("Logo.png");
+    JLabel logoConfSuppFilm = new JLabel(imageConfSuppFilm, JLabel.CENTER);
+    /////////////////////////////////////////////
+
+
+    ///FENETRE ADMIN -  Ajouter un film
+    JFrame fenetreAjoutFilm = new JFrame(); // création d'un panel pour la fenêtre
+    ImageIcon imageAjoutFilm = new ImageIcon("Logo2.png"); // on charge le logo
+    JLabel logoAjoutFilm = new JLabel(imageAjoutFilm, JLabel.CENTER); // on crée une zone pour le logo
+    JPanel pAjoutFilm = new JPanel(); // création d'un panel pour les boutons
+    JLabel nomAjoutFilm = new JLabel("Entrez le nom du film à mettre à l'affiche : ", JLabel.CENTER);
+    JTextField entrerNomAjoutFilm = new JTextField(); // création du champs pour renseigner le nom du film
+    JLabel dureeHeure = new JLabel("Entrez la durée du film en heure : ", JLabel.CENTER);
+    JTextField entrerDureeHeure = new JTextField();
+    JLabel dureeMin = new JLabel("Entrez la durée du film en min : ", JLabel.CENTER);
+    JTextField entrerDureeMin = new JTextField();
+    JLabel descriptionFilm = new JLabel("Entrez la description du film : ", JLabel.CENTER);
+    JTextField entrerDescriptionFilm = new JTextField();
+    JLabel afficheFilm = new JLabel("Entrez le nom de l'affiche de film : ", JLabel.CENTER);
+    JTextField entrerNomAffiche = new JTextField();
+    JButton retourAjoutFilm = new JButton("Retour");
+    JButton bAjouterFilm = new JButton("Ajouter le film");
+    ////////////////////////////////
+
+
+    ///FENETRE CONFIRMATION AJOUT FILM /////
+    JFrame fenetreConfirmationCAjoutFilm = new JFrame();
+    JPanel confirmationAjoutFilm = new JPanel();
+    JLabel confirmationCreationFilm = new JLabel("Le film a bien été ajouté!", JLabel.CENTER);
+    JButton okAjoutFilm = new JButton("OK");
+    ImageIcon imageConfAjoutFilm = new ImageIcon("Logo.png");
+    JLabel logoConfAjoutFilm = new JLabel(imageConfAjoutFilm, JLabel.CENTER);
+    /////////////////////////////////////////////
+
+
+    ///FENETRE ADMIN -  Ajouter une offre de réduction
+    JFrame fenetreReduc = new JFrame(); // création d'un panel pour la fenêtre
+    ImageIcon imageReduc = new ImageIcon("Logo2.png"); // on charge le logo
+    JLabel logoReduc = new JLabel(imageReduc, JLabel.CENTER);
+    JPanel reduc = new JPanel(); // création d'un panel pour les boutons
+    JLabel lReduction = new JLabel("Entrez le montant de la réduction : ", JLabel.CENTER);
+    JTextField entrerReduction = new JTextField(); // création du champs pour l'offre de réduction
+    JButton bAjouterReduc = new JButton("Valider");
+    JButton retourReduc = new JButton("Retour");
+    ////////////////////////////////
+
+
+    ///FENETRE CONFIRMATION PRISE EN COMPTE RÉDUCTION /////
+    JFrame fenetreConfirmationReduc = new JFrame();
+    JPanel confirmationReduc = new JPanel();
+    JLabel lconfirmationReduc = new JLabel("La réduction à appliquer a bien été prise en compte !", JLabel.CENTER);
+    JButton okReduction = new JButton("OK");
+    ImageIcon imageOkReduction = new ImageIcon("Logo.png");
+    JLabel logoOkRedution = new JLabel(imageOkReduction, JLabel.CENTER);
+    /////////////////////////////////////////////
+
+
+    ///FENETRE ADMIN -  Consulter les films populaires
+    JFrame fenetreFilmsPop = new JFrame(); // création d'un panel pour la fenêtre
+    ImageIcon imageFilmsPop = new ImageIcon("Logo2.png"); // on charge le logo
+    JLabel logoFilmsPop = new JLabel(imageFilmsPop, JLabel.CENTER);
+    JPanel pFilmsPop = new JPanel(); // création d'un panel pour les boutons
+    JLabel filmsPopu = new JLabel("Top 3 des films les plus populaires : ", JLabel.CENTER);
+    JButton retourPop = new JButton("Retour");
+    JLabel Top1 = new JLabel();
+    JLabel Top2 = new JLabel();
+    JLabel Top3 = new JLabel();
+    JLabel imageTop1 = new JLabel();
+    JLabel imageTop2 = new JLabel();
+    JLabel imageTop3 = new JLabel();
+    Integer nF1 = 0;
+    Integer nF2 = 0;
+    Integer nF3 = 0;
+    Integer nF4 = 0;
+    Integer nF5 = 0;
+    Integer nF6 = 0;
+    Integer nF7 = 0;
+    Integer nF8 = 0;
+    List<Integer> top3 = new ArrayList<>();
+    Film filmPop1 = new Film();
+    Film filmPop2 = new Film();
+    Film filmPop3 = new Film();
+    ////////////////////////////////
+
+
+    ///FENETRE ADMIN -  Consulter le dossier d'un client
+    JFrame fenetreDossierClient = new JFrame(); // création d'un panel pour la fenêtre
+    ImageIcon imageDossierClient = new ImageIcon("Logo2.png"); // on charge le logo
+    JLabel logoDossierClient = new JLabel(imageDossierClient, JLabel.CENTER);
+    JPanel dossierClient = new JPanel(); // création d'un panel pour afficher du texte
+    JLabel idClient = new JLabel("Entrez l'ID du client : ", JLabel.CENTER);
+    JTextField entrerIdClient = new JTextField(); // création du champs pour renseigner l'id du client
+    JButton rechercherDossierClient = new JButton("Rechercher client");
+    JButton retourDossierClient = new JButton("Retour");
+    ////////////////////////////////
+
+
+    ///FENETRE INFORMATIONS CLIENT MEMBRE /////
+    JFrame fenetreInfoClientMembre = new JFrame();
+    JPanel infoClientMembre = new JPanel();
+    JLabel infoClientMNom = new JLabel();
+    JLabel infoClientMPrenom = new JLabel();
+    JLabel infoClientMCategorie = new JLabel();
+    JLabel InfoClientMHistorique = new JLabel("Historique des billets achetés : ", JLabel.CENTER);
+    JButton okInfoClientMembre = new JButton("OK");
+    ImageIcon imageInfoClient = new ImageIcon("Logo2.png");
+    JLabel logoInfoClient = new JLabel(imageInfoClient, JLabel.CENTER);
+    /////////////////////////////////////////////
+
     ///FENETRE ACCUEIL///////////////
     JFrame fenetreAcceuil = new JFrame();
     JPanel cinema = new JPanel();
@@ -80,9 +244,6 @@ public class Fenetre {
     Film F6 = new Film();
     Film F7 = new Film();
     Film F8 = new Film();
-
-
-
 
     JButton Seance1F1 = new JButton("8h30");
     JButton Seance2F1 = new JButton("12h30");
@@ -152,10 +313,12 @@ public class Fenetre {
     JLabel logo6 = new JLabel(imageC5, JLabel.CENTER);
     /////////////////////////////////////////////
 
-
+    ///Attribut utilises pour la connexion et Objet de classe tampon
     Client client = new Client();
     ClientMembre clientMembre = new ClientMembre();
+    Admin administrateur = new Admin();
     boolean testConnexion = false;
+    boolean testConnexionA = false;
     int reduction = 0;
     Billet billetTemp = new Billet(0,0,0,0,"Default");
 
@@ -164,18 +327,23 @@ public class Fenetre {
         Color jaunePale = new Color(255, 251, 220);
         Color jaune = new Color(255, 215, 0);
         ///FENETRE PRINCIPALE//////////
+        ///Creation de la Frame principale
         fenetrePrincipale.setLayout(new BorderLayout());
         fenetrePrincipale.setBackground(jaunePale);
         fenetrePrincipale.setBounds(0, 0, 800, 700);
-        fenetrePrincipale.setTitle("Cinema UGECE Paris");
+        fenetrePrincipale.setTitle("CineMax Paris");
         fenetrePrincipale.setResizable(true);
 
+        ///On cree le pannel et on le set comme un Grid Bag Layout
         connexion.setLayout(new GridBagLayout());
         connexion.setBackground(jaunePale);
         GridBagConstraints gbc = new GridBagConstraints();
+        ///On definit la taille du gridbaglayout
         gbc.weightx = 5;
         gbc.weighty = 5;
         ///gbc.fill = GridBagConstraints.BOTH;
+
+        ///On configure les boutons
         Invite.setBackground(jaune);
         Invite.setForeground(Color.BLACK);
         Invite.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
@@ -189,6 +357,9 @@ public class Fenetre {
         Administrateur.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         Administrateur.setFont(new Font("Arial", Font.BOLD, 20));
 
+        ///On positionne les boutons dans leur case
+        ///On definit leur ancrage
+        ///Et on definit leur taille
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -217,18 +388,23 @@ public class Fenetre {
         gbc.ipady = 30;
         connexion.add(Administrateur,gbc);
 
+        ///On ajoute le Panel a la Frame
         fenetrePrincipale.getContentPane().add(connexion, BorderLayout.CENTER);
 
+        ///On definit la fermeture de la  Frame
         fenetrePrincipale.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent evt) {
                 System.exit(0); // tout fermer												System.exit(0); // tout fermer
             }
         });
+        ///On rend la Frame visible
         fenetrePrincipale.setVisible(true);
 
+        ///On defnit l'evenementiel des boutons
         Invite.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
+                ///On rend la fentre principale invisible et on affiche la fentre d'accueil du cinema
                 fenetrePrincipale.setVisible(false);
                 fenetreAcceuil.setVisible(true);
             }
@@ -236,25 +412,26 @@ public class Fenetre {
         });
         Membre.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
+                ///On rend invisible la fenetre principale et on affiche la fentre de choix
                 fenetrePrincipale.setVisible(false);
                 fenetreChoix.setVisible(true);
             }
 
         });
-        /*Administrateur.addActionListener(new ActionListener(){
+        Administrateur.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
                 fenetrePrincipale.setVisible(false);
-                fenetreAdmin.setVisible(true);
+                fenetreDeConnexionAdmin.setVisible(true);
             }
 
-        });*/
+        });
         //////////////////////////////////
 
         ///FENETRE CHOIX//////////////////
         fenetreChoix.setLayout(new BorderLayout());
         fenetreChoix.setBackground(jaunePale);
         fenetreChoix.setBounds(0, 0, 800, 700);
-        fenetreChoix.setTitle("Cinema UGECE Paris");
+        fenetreChoix.setTitle("CineMax Paris");
         fenetreChoix.setResizable(true);
 
         choix.setLayout(new GridBagLayout());
@@ -304,6 +481,7 @@ public class Fenetre {
 
         creerCompte.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
+                ///On rend la fenetre de choix invisible et on affiche celle de la creation de compte
                 fenetreChoix.setVisible(false);
                 fenetreCreationCompte.setVisible(true);
             }
@@ -311,6 +489,7 @@ public class Fenetre {
         });
         seConnecter.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
+                ///On rend la fenetre de choix invisible et on affiche celle de connexion
                 fenetreChoix.setVisible(false);
                 fenetreDeConnexion.setVisible(true);
             }
@@ -322,7 +501,7 @@ public class Fenetre {
         fenetreCreationCompte.setLayout(new BorderLayout());
         fenetreCreationCompte.setBackground(jaunePale);
         fenetreCreationCompte.setBounds(0, 0, 800, 700);
-        fenetreCreationCompte.setTitle("Cinema UGECE Paris");
+        fenetreCreationCompte.setTitle("CineMax Paris");
         fenetreCreationCompte.setResizable(true);
 
         creation.setLayout(new GridBagLayout());
@@ -334,6 +513,8 @@ public class Fenetre {
         retour.setForeground(Color.BLACK);
         retour.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         retour.setFont(new Font("Arial", Font.BOLD, 20));
+
+        ///On definit les attributs de la Combo Box
         creer.setBackground(jaune);
         creer.setForeground(Color.BLACK);
         creer.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
@@ -440,6 +621,7 @@ public class Fenetre {
         fenetreCreationCompte.setVisible(false);
         retour.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
+                ///On rend la fenetre de connexion invisible et on reaffiche celle du choix
                 fenetreCreationCompte.setVisible(false);
                 fenetreChoix.setVisible(true);
             }
@@ -449,11 +631,12 @@ public class Fenetre {
             public void actionPerformed(ActionEvent evt){
                 fenetreCreationCompte.setVisible(false);
                 try {
-                    System.out.println((String) categorie.getItemAt(categorie.getSelectedIndex()));
+                    ///On recupere els informations saisit par le client et on les ajoute a la BDD
                     maconnexion.ecrireClientMembre(Nom.getText(), Prenom.getText(), (String) categorie.getItemAt(categorie.getSelectedIndex()), id.getText(), mdp.getText());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                ///On confirme la creation du compte
                 fenetreConfirmationCreationCompte.setVisible(true);
             }
 
@@ -464,7 +647,7 @@ public class Fenetre {
         fenetreConfirmationCreationCompte.setLayout(new BorderLayout());
         fenetreConfirmationCreationCompte.setBackground(jaunePale);
         fenetreConfirmationCreationCompte.setBounds(0, 0, 800, 700);
-        fenetreConfirmationCreationCompte.setTitle("Cinema UGECE Paris");
+        fenetreConfirmationCreationCompte.setTitle("CineMax Paris");
         fenetreConfirmationCreationCompte.setResizable(true);
 
         confirmation.setLayout(new GridBagLayout());
@@ -511,6 +694,7 @@ public class Fenetre {
 
         ok.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
+                ///On rend la fenetre de confirmation de creation de compte invisible et on affiche la fentre principale
                 fenetreConfirmationCreationCompte.setVisible(false);
                 fenetrePrincipale.setVisible(true);
             }
@@ -522,7 +706,7 @@ public class Fenetre {
         fenetreDeConnexion.setLayout(new BorderLayout());
         fenetreDeConnexion.setBackground(jaunePale);
         fenetreDeConnexion.setBounds(0, 0, 800, 700);
-        fenetreDeConnexion.setTitle("Cinema UGECE Paris");
+        fenetreDeConnexion.setTitle("CineMax Paris");
         fenetreDeConnexion.setResizable(true);
 
         connecter.setLayout(new GridBagLayout());
@@ -601,6 +785,7 @@ public class Fenetre {
         fenetreDeConnexion.setVisible(false);
         retour2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
+                ///On rend la fenetre de connexion invisible et on affiche la fenetre de choix
                 fenetreDeConnexion.setVisible(false);
                 fenetreChoix.setVisible(true);
             }
@@ -609,17 +794,21 @@ public class Fenetre {
         seConnecter2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
                 try {
+                    ///On test la connexion en recuperant l'identifiant et le mdp saisit
                     testConnexion = maconnexion.connexionMembre(Id.getText(), Pw.getText());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
                 if(testConnexion == true){
+                    ///Si la connexion est reussie on rend invisible la fenetre de connexion
                     fenetreDeConnexion.setVisible(false);
                     try {
+                        ///On recupere les informations du client connecte
                         clientMembre = maconnexion.recupClient(Id.getText());
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
+                    ///En fonction de la categorie du client on applique la reduction
                     if(clientMembre.getCategorie().equals("Regulier")){
                         reduction = 5;
                         System.out.println(reduction);
@@ -633,7 +822,7 @@ public class Fenetre {
                         System.out.println(reduction);
                     }
                     fenetreAcceuil.setVisible(true);
-                }else{
+                }else{/// Si la connexion est refusee on affiche un msg d'erreur
                     JLabel mdpFaux = new JLabel("Identifiant ou Mot de passe incorrect!");
                     mdpFaux.setFont(new Font("Arial", Font.BOLD, 15));
                     mdpFaux.setBackground(jaunePale);
@@ -655,11 +844,147 @@ public class Fenetre {
         });
         /////////////////////////////////////////////////////////////
 
+        ///FENETRE DE CONNEXION ADMIN////////////////
+        fenetreDeConnexionAdmin.setLayout(new BorderLayout());
+        fenetreDeConnexionAdmin.setBackground(jaunePale);
+        fenetreDeConnexionAdmin.setBounds(0, 0, 800, 700);
+        fenetreDeConnexionAdmin.setTitle("CineMax Paris - Connexion administrateur");
+        fenetreDeConnexionAdmin.setResizable(true);
+
+        connecterAdmin.setLayout(new GridBagLayout());
+        connecterAdmin.setBackground(jaunePale);
+
+        gbc.weightx = 3;
+        gbc.weighty = 3;
+
+        IDAdmin.setForeground(Color.BLACK);
+        IDAdmin.setFont(new Font("Arial", Font.BOLD, 20));
+        IdAdmin.setForeground(Color.BLACK);
+        IdAdmin.setBackground(jaune);
+        IdAdmin.setFont(new Font("Arial", Font.BOLD, 20));
+        PWAdmin.setForeground(Color.BLACK);
+        PWAdmin.setFont(new Font("Arial", Font.BOLD, 20));
+        PwAdmin.setForeground(Color.BLACK);
+        PwAdmin.setBackground(jaune);
+        PwAdmin.setFont(new Font("Arial", Font.BOLD, 20));
+        retourConnexAdmin.setBackground(jaune);
+        retourConnexAdmin.setForeground(Color.BLACK);
+        retourConnexAdmin.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        retourConnexAdmin.setFont(new Font("Arial", Font.BOLD, 15));
+        seConnecterAdmin.setBackground(jaune);
+        seConnecterAdmin.setForeground(Color.BLACK);
+        seConnecterAdmin.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        seConnecterAdmin.setFont(new Font("Arial", Font.BOLD, 15));
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.ipadx = 140;
+        gbc.ipady = 30;
+        connecterAdmin.add(logoConnexAdmin, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.ipadx = 100;
+        gbc.ipady = 15;
+        connecterAdmin.add(IDAdmin, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.ipadx = 200;
+        gbc.ipady = 15;
+        connecterAdmin.add(IdAdmin, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.ipadx = 100;
+        gbc.ipady = 15;
+        connecterAdmin.add(PWAdmin, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.ipadx = 200;
+        gbc.ipady = 15;
+        connecterAdmin.add(PwAdmin, gbc);
+
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.ipadx = 100;
+        gbc.ipady = 15;
+        connecterAdmin.add(retourConnexAdmin,gbc);
+
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridx = 2;
+        gbc.gridy = 3;
+        gbc.ipadx = 80;
+        gbc.ipady = 15;
+        connecterAdmin.add(seConnecterAdmin,gbc);
+
+        fenetreDeConnexionAdmin.getContentPane().add(connecterAdmin, BorderLayout.CENTER);
+
+        fenetreDeConnexionAdmin.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent evt) {
+                System.exit(0); // tout fermer												System.exit(0); // tout fermer
+            }
+        });
+        fenetreDeConnexionAdmin.setVisible(false);
+
+        retourConnexAdmin.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreDeConnexionAdmin.setVisible(false);
+                fenetrePrincipale.setVisible(true);
+            }
+
+        });
+
+        seConnecterAdmin.addActionListener(new ActionListener(){ // j'utilise la fonction client membre pour les admins avec une nouvelle catégorie
+            public void actionPerformed(ActionEvent evt){
+                try {
+                    testConnexionA= maconnexion.connexionAdmin(IdAdmin.getText(), PwAdmin.getText());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                if(testConnexionA == true){
+                    fenetreDeConnexionAdmin.setVisible(false);
+                    try {
+                        administrateur = maconnexion.recupAdmin(IdAdmin.getText());
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    fenetreAdmin.setVisible(true);
+                }else{
+                    JLabel mdpFauxA = new JLabel("Identifiant ou Mot de passe incorrect! Veuillez réessayer");
+                    mdpFauxA.setFont(new Font("Arial", Font.BOLD, 15));
+                    mdpFauxA.setBackground(jaunePale);
+                    mdpFauxA.setForeground(Color.RED);
+                    gbc.anchor = GridBagConstraints.CENTER;
+                    gbc.weightx = 3;
+                    gbc.weighty = 3;
+                    gbc.gridx = 1;
+                    gbc.gridy = 2;
+                    gbc.ipadx = 100;
+                    gbc.ipady = 15;
+                    connecterAdmin.add(mdpFauxA,gbc);
+                    fenetreDeConnexionAdmin.setVisible(false);
+                    fenetreDeConnexionAdmin.getContentPane().add(connecterAdmin, BorderLayout.CENTER);
+                    fenetreDeConnexionAdmin.setVisible(true);
+                }
+            }
+
+        });
+        /////////////////////////////////////////////////////////////
+
         ///FENETRE CONFIRMATION ACHAT///
         fenetreConfirmationAchat.setLayout(new BorderLayout());
         fenetreConfirmationAchat.setBackground(jaunePale);
         fenetreConfirmationAchat.setBounds(0, 0, 800, 700);
-        fenetreConfirmationAchat.setTitle("Cinema UGECE Paris");
+        fenetreConfirmationAchat.setTitle("CineMax Paris");
         fenetreConfirmationAchat.setResizable(true);
 
         achat.setLayout(new GridBagLayout());
@@ -706,14 +1031,1200 @@ public class Fenetre {
 
         ok2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
+                ///On rend la fenetre de confirmat d'achat invisible et on affiche la fenetre d'accueil
                 fenetreConfirmationAchat.setVisible(false);
                 fenetreAcceuil.setVisible(true);
             }
 
         });
+        /////////////////////////////////////
+
+
+        /// FENETRE ADMIN //////////////
+        fenetreAdmin.setLayout(new BorderLayout());
+        fenetreAdmin.setBackground(jaunePale);
+        fenetreAdmin.setBounds(0, 0, 800, 700);
+        fenetreAdmin.setTitle("CineMax Paris - Administrateur");
+        fenetreAdmin.setResizable(true);
+
+        choixAdmin.setLayout(new GridBagLayout());
+        choixAdmin.setBackground(jaunePale);
+
+        gbc.weightx = 5;
+        gbc.weighty = 5;
+        majFilms.setBackground(jaune);
+        majFilms.setForeground(Color.BLACK);
+        majFilms.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        majFilms.setFont(new Font("Arial", Font.BOLD, 20));
+        ajoutReduc.setBackground(jaune);
+        ajoutReduc.setForeground(Color.BLACK);
+        ajoutReduc.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        ajoutReduc.setFont(new Font("Arial", Font.BOLD, 20));
+        filmsPop.setBackground(jaune);
+        filmsPop.setForeground(Color.BLACK);
+        filmsPop.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        filmsPop.setFont(new Font("Arial", Font.BOLD, 20));
+        dossiersClients.setBackground(jaune);
+        dossiersClients.setForeground(Color.BLACK);
+        dossiersClients.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        dossiersClients.setFont(new Font("Arial", Font.BOLD, 20));
+        deconnexion.setBackground(jaune);
+        deconnexion.setForeground(Color.BLACK);
+        deconnexion.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        deconnexion.setFont(new Font("Arial", Font.BOLD, 18));
+
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.ipadx = 140;
+        gbc.ipady = 30;
+        choixAdmin.add(logoAdmin, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.ipadx = 120;
+        gbc.ipady = 30;
+        choixAdmin.add(majFilms, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.ipadx = 120;
+        gbc.ipady = 30;
+        choixAdmin.add(ajoutReduc, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.ipadx = 120;
+        gbc.ipady = 30;
+        choixAdmin.add(filmsPop,gbc);
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.ipadx = 120;
+        gbc.ipady = 30;
+        choixAdmin.add(dossiersClients,gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        gbc.ipadx = 120;
+        gbc.ipady = 15;
+        choixAdmin.add(deconnexion,gbc); // à changer en déconnexion
+
+        fenetreAdmin.getContentPane().add(choixAdmin, BorderLayout.CENTER);
+
+        fenetreAdmin.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent evt) {
+                System.exit(0); // tout fermer
+            }
+        });
+        fenetreAdmin.setVisible(false);
+
+        majFilms.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreAdmin.setVisible(false);
+                fenetreMajFilms.setVisible(true);
+            }
+
+        });
+
+        ajoutReduc.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreAdmin.setVisible(false);
+                fenetreReduc.setVisible(true);
+            }
+
+        });
+
+        filmsPop.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreAdmin.setVisible(false);
+                try {
+                    top3 = maconnexion.filmPopulaire();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                nF1 = top3.get(0);
+                nF2 = top3.get(1);
+                nF3 = top3.get(2);
+                nF4 = top3.get(3);
+                nF5 = top3.get(4);
+                nF6 = top3.get(5);
+                nF7 = top3.get(6);
+                nF8 = top3.get(7);
+
+
+                Collections.sort(top3, Collections.reverseOrder());
+                for(int i = 0; i < top3.size(); i++){
+
+                    System.out.println(top3.get(i));
+
+                }
+
+                if(top3.get(0) == nF1){
+
+                    filmPop1 = F1;
+                }
+                if(top3.get(0) == nF2){
+
+                    filmPop1 = F2;
+                }
+                if(top3.get(0) == nF3){
+
+                    filmPop1 = F3;
+                }
+                if(top3.get(0) == nF4){
+
+                    filmPop1 = F4;
+                }
+                if(top3.get(0) == nF5){
+
+                    filmPop1 = F5;
+                }
+                if(top3.get(0) == nF6){
+
+                    filmPop1 = F6;
+                }
+                if(top3.get(0) == nF7){
+
+                    filmPop1 = F7;
+                }
+                if(top3.get(0) == nF8){
+
+                    filmPop1 = F8;
+                }
+
+
+                //FILM POP2
+                if(top3.get(1) == nF1){
+
+                    filmPop2 = F1;
+                }
+                if(top3.get(1) == nF2){
+
+                    filmPop2 = F2;
+                }
+                if(top3.get(1) == nF3){
+
+                    filmPop2 = F3;
+                }
+                if(top3.get(1) == nF4){
+
+                    filmPop2 = F4;
+                }
+                if(top3.get(1) == nF5){
+
+                    filmPop2 = F5;
+                }
+                if(top3.get(1) == nF6){
+
+                    filmPop2 = F6;
+                }
+                if(top3.get(1) == nF7){
+
+                    filmPop2 = F7;
+                }
+                if(top3.get(1) == nF8){
+
+                    filmPop2 = F8;
+                }
+
+                //FILM POP3
+                if(top3.get(2) == nF1){
+
+                    filmPop3 = F1;
+                }
+                if(top3.get(2) == nF2){
+
+                    filmPop3 = F2;
+                }
+                if(top3.get(2) == nF3){
+
+                    filmPop3 = F3;
+                }
+                if(top3.get(2) == nF4){
+
+                    filmPop3 = F4;
+                }
+                if(top3.get(2) == nF5){
+
+                    filmPop3 = F5;
+                }
+                if(top3.get(2) == nF6){
+
+                    filmPop3 = F6;
+                }
+                if(top3.get(2) == nF7){
+
+                    filmPop3 = F7;
+                }
+                if(top3.get(2) == nF8){
+
+                    filmPop3 = F8;
+                }
+
+                /// FENETRE ADMIN - Films populaires du moment // à finir
+                fenetreFilmsPop.setLayout(new BorderLayout());
+                fenetreFilmsPop.setBackground(jaunePale);
+                fenetreFilmsPop.setBounds(0, 0, 800, 700);
+                fenetreFilmsPop.setTitle("Administrateur - Films populaires");
+                fenetreFilmsPop.setResizable(true);
+                Top1.setText("Top 1 : " + filmPop1.getNom());
+                Top1.setBackground(jaunePale);
+                Top2.setText("Top 2 : " + filmPop2.getNom());
+                Top2.setBackground(jaunePale);
+                Top3.setText("Top 3 : " + filmPop3.getNom());
+                Top3.setBackground(jaunePale);
+                ImageIcon afficheTop1 = new ImageIcon(filmPop1.getImage());
+                imageTop1.setIcon(afficheTop1);
+                ImageIcon afficheTop2 = new ImageIcon(filmPop2.getImage());
+                imageTop2.setIcon(afficheTop2);
+                ImageIcon afficheTop3 = new ImageIcon(filmPop3.getImage());
+                imageTop3.setIcon(afficheTop3);
+                retourPop.setBackground(jaune);
+                retourPop.setForeground(Color.BLACK);
+                retourPop.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+                retourPop.setFont(new Font("Arial", Font.BOLD, 20));
+
+                pFilmsPop.setLayout(new GridBagLayout());
+                pFilmsPop.setBackground(jaunePale);
+
+                gbc.weightx = 3;
+                gbc.weighty = 6;
+                filmsPopu.setForeground(Color.BLACK);
+                filmsPop.setFont(new Font("Arial", Font.BOLD, 20));
+
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 140;
+                gbc.ipady = 30;
+                pFilmsPop.add(logoFilmsPop, gbc);
+
+                gbc.anchor = GridBagConstraints.CENTER;
+                gbc.gridx = 0;
+                gbc.gridy = 1;
+                gbc.ipadx = 50;
+                gbc.ipady = 30;
+                pFilmsPop.add(imageTop1, gbc);
+
+                gbc.anchor = GridBagConstraints.CENTER;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 50;
+                gbc.ipady = 30;
+                pFilmsPop.add(imageTop2, gbc);
+
+                gbc.anchor = GridBagConstraints.CENTER;
+                gbc.gridx = 2;
+                gbc.gridy = 1;
+                gbc.ipadx = 50;
+                gbc.ipady = 30;
+                pFilmsPop.add(imageTop3, gbc);
+
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 0;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 30;
+                pFilmsPop.add(Top1, gbc);
+
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 30;
+                pFilmsPop.add(Top2, gbc);
+
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 2;
+                gbc.gridy = 2;
+                gbc.ipadx = 50;
+                gbc.ipady = 30;
+                pFilmsPop.add(Top3, gbc);
+
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 110;
+                gbc.ipady = 15;
+                pFilmsPop.add(retourPop, gbc);
+
+
+                fenetreFilmsPop.getContentPane().add(pFilmsPop, BorderLayout.CENTER);
+
+                fenetreFilmsPop.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer
+                    }
+                });
+                fenetreFilmsPop.setVisible(true);
+
+                retourPop.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent evt){
+                        fenetreFilmsPop.setVisible(false);
+                        fenetreAdmin.setVisible(true);
+                    }
+
+                });
+            }
+
+        });
+
+        dossiersClients.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreAdmin.setVisible(false);
+                fenetreDossierClient.setVisible(true);
+            }
+
+        });
+
+        deconnexion.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreAdmin.setVisible(false);
+                fenetrePrincipale.setVisible(true);
+            }
+
+        });
+
+        //////////////////////////////////
+
+
+        /// FENETRE ADMIN - Maj Films
+        fenetreMajFilms.setLayout(new BorderLayout());
+        fenetreMajFilms.setBackground(jaunePale);
+        fenetreMajFilms.setBounds(0, 0, 800, 700);
+        fenetreMajFilms.setTitle("Administrateur - Mise à jour des films à l'affiche");
+        fenetreMajFilms.setResizable(true);
+
+        choixOptionFilm.setLayout(new GridBagLayout());
+        choixOptionFilm.setBackground(jaunePale);
+
+        gbc.weightx = 5;
+        gbc.weighty = 5;
+        ajoutFilm.setBackground(jaune);
+        ajoutFilm.setForeground(Color.BLACK);
+        ajoutFilm.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        ajoutFilm.setFont(new Font("Arial", Font.BOLD, 20));
+        suppFilm.setBackground(jaune);
+        suppFilm.setForeground(Color.BLACK);
+        suppFilm.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        suppFilm.setFont(new Font("Arial", Font.BOLD, 20));
+        retourMaj.setBackground(jaune);
+        retourMaj.setForeground(Color.BLACK);
+        retourMaj.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        retourMaj.setFont(new Font("Arial", Font.BOLD, 20));
+
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.ipadx = 140;
+        gbc.ipady = 30;
+        choixOptionFilm.add(logoMaj, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.ipadx = 120;
+        gbc.ipady = 15;
+        choixOptionFilm.add(ajoutFilm, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.ipadx = 120;
+        gbc.ipady = 15;
+        choixOptionFilm.add(suppFilm, gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.ipadx = 120;
+        gbc.ipady = 15;
+        choixOptionFilm.add(retourMaj, gbc);
+
+
+
+        fenetreMajFilms.getContentPane().add(choixOptionFilm, BorderLayout.CENTER);
+
+        fenetreMajFilms.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent evt) {
+                System.exit(0); // tout fermer
+            }
+        });
+        fenetreMajFilms.setVisible(false);
+
+        retourMaj.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreMajFilms.setVisible(false);
+                fenetreAdmin.setVisible(true);
+            }
+
+        });
+
+        ajoutFilm.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreMajFilms.setVisible(false);
+                fenetreAjoutFilm.setVisible(true);
+            }
+
+        });
+
+        suppFilm.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreMajFilms.setVisible(false);
+                fenetreSuppFilm.setVisible(true);
+            }
+
+        });
+        //////////////////////////////////
+
+        /// FENETRE ADMIN - Supprimer un film
+        fenetreSuppFilm.setLayout(new BorderLayout());
+        fenetreSuppFilm.setBackground(jaunePale);
+        fenetreSuppFilm.setBounds(0, 0, 800, 700);
+        fenetreSuppFilm.setTitle("Administrateur - Supprimer un film");
+        fenetreSuppFilm.setResizable(true);
+
+        pSuppFilm.setLayout(new GridBagLayout());
+        pSuppFilm.setBackground(jaunePale);
+
+        gbc.weightx = 5;
+        gbc.weighty = 5;
+        nomSuppFilm.setBackground(jaunePale);
+        nomSuppFilm.setForeground(Color.BLACK);
+        nomSuppFilm.setFont(new Font("Arial", Font.BOLD, 20));
+        entrerNomSuppFilm.setBackground(jaune);
+        entrerNomSuppFilm.setForeground(Color.BLACK);
+        entrerNomSuppFilm.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        entrerNomSuppFilm.setFont(new Font("Arial", Font.BOLD, 20));
+        bSuppFilm.setBackground(jaune);
+        bSuppFilm.setForeground(Color.BLACK);
+        bSuppFilm.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        bSuppFilm.setFont(new Font("Arial", Font.BOLD, 15));
+        retourSuppFilm.setBackground(jaune);
+        retourSuppFilm.setForeground(Color.BLACK);
+        retourSuppFilm.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        retourSuppFilm.setFont(new Font("Arial", Font.BOLD, 15));
+
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.ipadx = 140;
+        gbc.ipady = 30;
+        pSuppFilm.add(logoSuppFilm, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.ipadx = 120;
+        gbc.ipady = 15;
+        pSuppFilm.add(nomSuppFilm, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.ipadx = 150;
+        gbc.ipady = 15;
+        pSuppFilm.add(entrerNomSuppFilm, gbc);
+
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridx = 2;
+        gbc.gridy = 4;
+        gbc.ipadx = 100;
+        gbc.ipady = 10;
+        pSuppFilm.add(bSuppFilm, gbc);
+
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.ipadx = 100;
+        gbc.ipady = 10;
+        pSuppFilm.add(retourSuppFilm, gbc);
+
+
+        fenetreSuppFilm.getContentPane().add(pSuppFilm, BorderLayout.CENTER);
+
+        fenetreSuppFilm.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent evt) {
+                System.exit(0); // tout fermer
+            }
+        });
+        fenetreSuppFilm.setVisible(false);
+
+        bSuppFilm.addActionListener(new ActionListener(){
+
+            public void actionPerformed(ActionEvent evt){
+                fenetreSuppFilm.setVisible(false);
+                try {
+                    maconnexion.supprimerFilm(entrerNomSuppFilm.getText());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                fenetreMajFilms.setVisible(true);
+            }
+
+        });
+
+        retourSuppFilm.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreSuppFilm.setVisible(false);
+                fenetreMajFilms.setVisible(true);
+            }
+
+        });
+
+        ///FENETRE CONFIRMATION SUPRESSION FILM///
+        fenetreConfirmationSuppFilm.setLayout(new BorderLayout());
+        fenetreConfirmationSuppFilm.setBackground(jaunePale);
+        fenetreConfirmationSuppFilm.setBounds(0, 0, 800, 700);
+        fenetreConfirmationSuppFilm.setTitle("Administrateur - Confirmation supression film");
+        fenetreConfirmationSuppFilm.setResizable(true);
+
+        confirmationSuppFilm.setLayout(new GridBagLayout());
+        confirmationSuppFilm.setBackground(jaunePale);
+
+        gbc.weightx = 3;
+        gbc.weighty = 3;
+        okSuppFilm.setBackground(jaune);
+        okSuppFilm.setForeground(Color.BLACK);
+        okSuppFilm.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        okSuppFilm.setFont(new Font("Arial", Font.BOLD, 20));
+        confirmationSuppFilm.setFont(new Font("Arial", Font.BOLD, 20));
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.ipadx = 140;
+        gbc.ipady = 30;
+        confirmationSuppFilm.add(logoConfSuppFilm, gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.ipadx = 300;
+        gbc.ipady = 30;
+        confirmationSuppFilm.add(confirmationSuppressionFilm, gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.ipadx = 200;
+        gbc.ipady = 15;
+        confirmationSuppFilm.add(okSuppFilm, gbc);
+
+        fenetreConfirmationSuppFilm.getContentPane().add(confirmationSuppFilm, BorderLayout.CENTER);
+
+        fenetreConfirmationSuppFilm.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent evt) {
+                System.exit(0); // System.exit(0); // tout fermer
+            }
+        });
+        fenetreConfirmationSuppFilm.setVisible(false);
+
+        okSuppFilm.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreConfirmationSuppFilm.setVisible(false);
+                fenetreMajFilms.setVisible(true);
+            }
+
+        });
+        //////////////////////////////////
+
+
+        /// FENETRE ADMIN - Ajouter un film
+        fenetreAjoutFilm.setLayout(new BorderLayout());
+        fenetreAjoutFilm.setBackground(jaunePale);
+        fenetreAjoutFilm.setBounds(0, 0, 800, 700);
+        fenetreAjoutFilm.setTitle("Administrateur - Ajouter un film");
+        fenetreAjoutFilm.setResizable(true);
+
+        pAjoutFilm.setLayout(new GridBagLayout());
+        pAjoutFilm.setBackground(jaunePale);
+
+        gbc.weightx = 5;
+        gbc.weighty = 11;
+        nomAjoutFilm.setBackground(jaunePale);
+        nomAjoutFilm.setForeground(Color.BLACK);
+        nomAjoutFilm.setFont(new Font("Arial", Font.BOLD, 17));
+        entrerNomAjoutFilm.setBackground(jaune);
+        entrerNomAjoutFilm.setForeground(Color.BLACK);
+        entrerNomAjoutFilm.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        entrerNomAjoutFilm.setFont(new Font("Arial", Font.BOLD, 17));
+        dureeHeure.setBackground(jaunePale);
+        dureeHeure.setForeground(Color.BLACK);
+        dureeHeure.setFont(new Font("Arial", Font.BOLD, 17));
+        entrerDureeHeure.setBackground(jaune);
+        entrerDureeHeure.setForeground(Color.BLACK);
+        entrerDureeHeure.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        entrerDureeHeure.setFont(new Font("Arial", Font.BOLD, 17));
+        dureeMin.setBackground(jaunePale);
+        dureeMin.setForeground(Color.BLACK);
+        dureeMin.setFont(new Font("Arial", Font.BOLD, 17));
+        entrerDureeMin.setBackground(jaune);
+        entrerDureeMin.setForeground(Color.BLACK);
+        entrerDureeMin.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        entrerDureeMin.setFont(new Font("Arial", Font.BOLD, 17));
+        descriptionFilm.setBackground(jaunePale);
+        descriptionFilm.setForeground(Color.BLACK);
+        descriptionFilm.setFont(new Font("Arial", Font.BOLD, 17));
+        entrerDescriptionFilm.setBackground(jaune);
+        entrerDescriptionFilm.setForeground(Color.BLACK);
+        entrerDescriptionFilm.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        entrerDescriptionFilm.setFont(new Font("Arial", Font.BOLD, 17));
+        afficheFilm.setBackground(jaunePale);
+        afficheFilm.setForeground(Color.BLACK);
+        afficheFilm.setFont(new Font("Arial", Font.BOLD, 17));
+        entrerNomAffiche.setBackground(jaune);
+        entrerNomAffiche.setForeground(Color.BLACK);
+        entrerNomAffiche.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        entrerNomAffiche.setFont(new Font("Arial", Font.BOLD, 17));
+        bAjouterFilm.setBackground(jaune);
+        bAjouterFilm.setForeground(Color.BLACK);
+        bAjouterFilm.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        bAjouterFilm.setFont(new Font("Arial", Font.BOLD, 15));
+        retourAjoutFilm.setBackground(jaune);
+        retourAjoutFilm.setForeground(Color.BLACK);
+        retourAjoutFilm.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        retourAjoutFilm.setFont(new Font("Arial", Font.BOLD, 15));
+
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.ipadx = 140;
+        gbc.ipady = 30;
+        pAjoutFilm.add(logoAjoutFilm, gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.ipadx = 120;
+        gbc.ipady = 15;
+        pAjoutFilm.add(nomAjoutFilm, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.ipadx = 150;
+        gbc.ipady = 14;
+        pAjoutFilm.add(entrerNomAjoutFilm, gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.ipadx = 120;
+        gbc.ipady = 15;
+        pAjoutFilm.add(dureeHeure, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.ipadx = 150;
+        gbc.ipady = 14;
+        pAjoutFilm.add(entrerDureeHeure, gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        gbc.ipadx = 120;
+        gbc.ipady = 15;
+        pAjoutFilm.add(dureeMin, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 6;
+        gbc.ipadx = 150;
+        gbc.ipady = 14;
+        pAjoutFilm.add(entrerDureeMin, gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 1;
+        gbc.gridy = 7;
+        gbc.ipadx = 120;
+        gbc.ipady = 15;
+        pAjoutFilm.add(descriptionFilm, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 8;
+        gbc.ipadx = 150;
+        gbc.ipady = 14;
+        pAjoutFilm.add(entrerDescriptionFilm, gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 1;
+        gbc.gridy = 9;
+        gbc.ipadx = 120;
+        gbc.ipady = 15;
+        pAjoutFilm.add(afficheFilm, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 10;
+        gbc.ipadx = 150;
+        gbc.ipady = 14;
+        pAjoutFilm.add(entrerNomAffiche, gbc);
+
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridx = 0;
+        gbc.gridy = 10;
+        gbc.ipadx = 100;
+        gbc.ipady = 15;
+        pAjoutFilm.add(retourAjoutFilm,gbc);
+
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridx = 2;
+        gbc.gridy = 10;
+        gbc.ipadx = 80;
+        gbc.ipady = 15;
+        pAjoutFilm.add(bAjouterFilm,gbc);
+
+
+        fenetreAjoutFilm.getContentPane().add(pAjoutFilm, BorderLayout.CENTER);
+
+        fenetreAjoutFilm.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent evt) {
+                System.exit(0); // tout fermer
+            }
+        });
+        fenetreAjoutFilm.setVisible(false);
+
+        retourAjoutFilm.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreAjoutFilm.setVisible(false);
+                fenetreMajFilms.setVisible(true);
+            }
+
+        });
+
+        bAjouterFilm.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreAjoutFilm.setVisible(false);
+                try {
+                    maconnexion.ecrireFilm(entrerNomAjoutFilm.getText(), entrerDureeHeure.getText(), entrerDureeMin.getText(), entrerDescriptionFilm.getText(), entrerNomAffiche.getText());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                fenetreConfirmationCAjoutFilm.setVisible(true);
+            }
+
+        });
+        //////////////////////////////////
+
+        ///FENETRE CONFIRMATION AJOUT FILM///
+        fenetreConfirmationCAjoutFilm.setLayout(new BorderLayout());
+        fenetreConfirmationCAjoutFilm.setBackground(jaunePale);
+        fenetreConfirmationCAjoutFilm.setBounds(0, 0, 800, 700);
+        fenetreConfirmationCAjoutFilm.setTitle("Administrateur - Confirmation ajout film");
+        fenetreConfirmationCAjoutFilm.setResizable(true);
+
+        confirmationAjoutFilm.setLayout(new GridBagLayout());
+        confirmationAjoutFilm.setBackground(jaunePale);
+
+        gbc.weightx = 3;
+        gbc.weighty = 3;
+        okAjoutFilm.setBackground(jaune);
+        okAjoutFilm.setForeground(Color.BLACK);
+        okAjoutFilm.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        okAjoutFilm.setFont(new Font("Arial", Font.BOLD, 20));
+        confirmationAjoutFilm.setFont(new Font("Arial", Font.BOLD, 20));
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.ipadx = 140;
+        gbc.ipady = 30;
+        confirmationAjoutFilm.add(logoConfAjoutFilm, gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.ipadx = 300;
+        gbc.ipady = 30;
+        confirmationAjoutFilm.add(confirmationCreationFilm, gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.ipadx = 200;
+        gbc.ipady = 15;
+        confirmationAjoutFilm.add(okAjoutFilm, gbc);
+
+        fenetreConfirmationCAjoutFilm.getContentPane().add(confirmationAjoutFilm, BorderLayout.CENTER);
+
+        fenetreConfirmationCAjoutFilm.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent evt) {
+                System.exit(0); // tout fermer												System.exit(0); // tout fermer
+            }
+        });
+        fenetreConfirmationCAjoutFilm.setVisible(false);
+
+        okAjoutFilm.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreConfirmationCAjoutFilm.setVisible(false);
+                fenetreMajFilms.setVisible(true);
+            }
+
+        });
+
+
+
+        /// FENETRE ADMIN - Offres de réduction
+        fenetreReduc.setLayout(new BorderLayout());
+        fenetreReduc.setBackground(jaunePale);
+        fenetreReduc.setBounds(0, 0, 800, 700);
+        fenetreReduc.setTitle("Administrateur - Offres de réductions");
+        fenetreReduc.setResizable(true);
+
+        reduc.setLayout(new GridBagLayout());
+        reduc.setBackground(jaunePale);
+
+        gbc.weightx = 5;
+        gbc.weighty = 5;
+        //reduction.setBackground(jaune);
+        lReduction.setForeground(Color.BLACK);
+        //reduction.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        lReduction.setFont(new Font("Arial", Font.BOLD, 20));
+        entrerReduction.setBackground(jaune);
+        entrerReduction.setForeground(Color.BLACK);
+        entrerReduction.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        entrerReduction.setFont(new Font("Arial", Font.BOLD, 20));
+        bAjouterReduc.setBackground(jaune);
+        bAjouterReduc.setForeground(Color.BLACK);
+        bAjouterReduc.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        bAjouterReduc.setFont(new Font("Arial", Font.BOLD, 15));
+        retourReduc.setBackground(jaune);
+        retourReduc.setForeground(Color.BLACK);
+        retourReduc.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        retourReduc.setFont(new Font("Arial", Font.BOLD, 15));
+
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.ipadx = 140;
+        gbc.ipady = 30;
+        reduc.add(logoReduc, gbc);
+
+        gbc.anchor = GridBagConstraints.SOUTH;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.ipadx = 120;
+        gbc.ipady = 30;
+        reduc.add(lReduction, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.ipadx = 120;
+        gbc.ipady = 10;
+        reduc.add(entrerReduction, gbc);
+
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridx = 2;
+        gbc.gridy = 4;
+        gbc.ipadx = 120;
+        gbc.ipady = 15;
+        reduc.add(bAjouterReduc, gbc);
+
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.ipadx = 120;
+        gbc.ipady = 15;
+        reduc.add(retourReduc, gbc);
+
+
+        fenetreReduc.getContentPane().add(reduc, BorderLayout.CENTER);
+
+        fenetreReduc.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent evt) {
+                System.exit(0); // tout fermer
+            }
+        });
+        fenetreReduc.setVisible(false);
+
+        retourReduc.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreReduc.setVisible(false);
+                fenetreAdmin.setVisible(true);
+            }
+
+        });
+
+        bAjouterReduc.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreReduc.setVisible(false);
+                reduction = (Integer.parseInt(entrerReduction.getText()));
+                fenetreAdmin.setVisible(true);
+            }
+
+        });
+        //////////////////////////////////
+
+
+        ///FENETRE CONFIRMATION REDUCTION //////
+        fenetreConfirmationReduc.setLayout(new BorderLayout());
+        fenetreConfirmationReduc.setBackground(jaunePale);
+        fenetreConfirmationReduc.setBounds(0, 0, 800, 700);
+        fenetreConfirmationReduc.setTitle("Administrateur - Validation de la réduction");
+        fenetreConfirmationReduc.setResizable(true);
+
+        confirmationReduc.setLayout(new GridBagLayout());
+        confirmationReduc.setBackground(jaunePale);
+
+        gbc.weightx = 3;
+        gbc.weighty = 3;
+        okReduction.setBackground(jaune);
+        okReduction.setForeground(Color.BLACK);
+        okReduction.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        okReduction.setFont(new Font("Arial", Font.BOLD, 20));
+        confirmationReduc.setFont(new Font("Arial", Font.BOLD, 20));
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.ipadx = 140;
+        gbc.ipady = 30;
+        confirmationReduc.add(logoOkRedution, gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.ipadx = 300;
+        gbc.ipady = 30;
+        confirmationReduc.add(lconfirmationReduc, gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.ipadx = 200;
+        gbc.ipady = 15;
+        confirmationReduc.add(okReduction, gbc);
+
+        fenetreConfirmationReduc.getContentPane().add(confirmationReduc, BorderLayout.CENTER);
+
+        fenetreConfirmationReduc.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent evt) {
+                System.exit(0); // tout fermer												System.exit(0); // tout fermer
+            }
+        });
+        fenetreConfirmationReduc.setVisible(false);
+
+        okReduction.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreConfirmationCAjoutFilm.setVisible(false);
+                fenetreAdmin.setVisible(true);
+            }
+
+        });
+
+
+
+
+
+
+        /// FENETRE ADMIN - Consulter dossier d'un client
+        fenetreDossierClient.setLayout(new BorderLayout());
+        fenetreDossierClient.setBackground(jaunePale);
+        fenetreDossierClient.setBounds(0, 0, 800, 700);
+        fenetreDossierClient.setTitle("Administrateur - Dossiers clients");
+        fenetreDossierClient.setResizable(true);
+
+        dossierClient.setLayout(new GridBagLayout());
+        dossierClient.setBackground(jaunePale);
+
+        gbc.weightx = 5;
+        gbc.weighty = 5;
+        idClient.setForeground(Color.BLACK);
+        idClient.setFont(new Font("Arial", Font.BOLD, 20));
+        entrerIdClient.setForeground(Color.BLACK);
+        entrerIdClient.setBackground(jaune);
+        entrerIdClient.setFont(new Font("Arial", Font.BOLD, 20));
+        rechercherDossierClient.setBackground(jaune);
+        rechercherDossierClient.setForeground(Color.BLACK);
+        rechercherDossierClient.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        rechercherDossierClient.setFont(new Font("Arial", Font.BOLD, 20));
+        retourDossierClient.setBackground(jaune);
+        retourDossierClient.setForeground(Color.BLACK);
+        retourDossierClient.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        retourDossierClient.setFont(new Font("Arial", Font.BOLD, 20));
+
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.ipadx = 140;
+        gbc.ipady = 30;
+        dossierClient.add(logoDossierClient, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.ipadx = 140;
+        gbc.ipady = 30;
+        dossierClient.add(idClient, gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.ipadx = 250;
+        gbc.ipady = 10;
+        dossierClient.add(entrerIdClient, gbc);
+
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridx = 2;
+        gbc.gridy = 4;
+        gbc.ipadx = 140;
+        gbc.ipady = 15;
+        dossierClient.add(rechercherDossierClient, gbc);
+
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.ipadx = 140;
+        gbc.ipady = 15;
+        dossierClient.add(retourDossierClient, gbc);
+
+
+        fenetreDossierClient.getContentPane().add(dossierClient, BorderLayout.CENTER);
+
+        fenetreDossierClient.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent evt) {
+                System.exit(0); // tout fermer
+            }
+        });
+        fenetreDossierClient.setVisible(false);
+
+        rechercherDossierClient.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreDossierClient.setVisible(false);
+                try {
+                    clientMembre = maconnexion.recupClient(entrerIdClient.getText());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                /// FENETRE ADMIN - Information du client
+
+                fenetreInfoClientMembre.setLayout(new BorderLayout());
+                fenetreInfoClientMembre.setBackground(jaunePale);
+                fenetreInfoClientMembre.setBounds(0, 0, 800, 700);
+                fenetreInfoClientMembre.setTitle("Administrateur - Information du client");
+                fenetreInfoClientMembre.setResizable(true);
+
+                infoClientMembre.setLayout(new GridBagLayout());
+                infoClientMembre.setBackground(jaunePale);
+
+                gbc.weightx = 5;
+                gbc.weighty = 5;
+                infoClientMembre.setForeground(Color.BLACK);
+                infoClientMembre.setFont(new Font("Arial", Font.BOLD, 20));
+                infoClientMNom.setText("Nom : " + clientMembre.getNom());
+                infoClientMNom.setFont(new Font("Arial", Font.BOLD, 20));
+                infoClientMPrenom.setText("Prenom : " + clientMembre.getPrenom());
+                infoClientMPrenom.setFont(new Font("Arial", Font.BOLD, 20));
+                infoClientMCategorie.setText("Catégorie : " + clientMembre.getCategorie());
+                infoClientMCategorie.setFont(new Font("Arial", Font.BOLD, 20));
+
+                okInfoClientMembre.setBackground(jaune);
+                okInfoClientMembre.setForeground(Color.BLACK);
+                okInfoClientMembre.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+                okInfoClientMembre.setFont(new Font("Arial", Font.BOLD, 20));
+
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.ipadx = 140;
+                gbc.ipady = 30;
+                infoClientMembre.add(logoInfoClient, gbc);
+
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.ipadx = 50;
+                gbc.ipady = 15;
+                infoClientMembre.add(infoClientMNom, gbc);
+
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.ipadx = 140;
+                gbc.ipady = 15;
+                infoClientMembre.add(infoClientMPrenom, gbc);
+
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 3;
+                gbc.ipadx = 140;
+                gbc.ipady = 15;
+                infoClientMembre.add(infoClientMCategorie, gbc);
+
+
+                gbc.anchor = GridBagConstraints.NORTH;
+                gbc.gridx = 1;
+                gbc.gridy = 4;
+                gbc.ipadx = 140;
+                gbc.ipady = 15;
+                infoClientMembre.add(okInfoClientMembre, gbc);
+
+
+                fenetreInfoClientMembre.getContentPane().add(infoClientMembre, BorderLayout.CENTER);
+
+                fenetreInfoClientMembre.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        System.exit(0); // tout fermer
+                    }
+                });
+                fenetreInfoClientMembre.setVisible(false);
+
+
+                okInfoClientMembre.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent evt){
+                        fenetreInfoClientMembre.setVisible(false);
+                        fenetreDossierClient.setVisible(true);
+                    }
+
+                });
+
+                fenetreInfoClientMembre.setVisible(true); // faire fenetre confirmation
+            }
+
+        });
+
+
+        retourDossierClient.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                fenetreDossierClient.setVisible(false);
+                fenetreAdmin.setVisible(true);
+            }
+
+        });
+        //////////////////////////////////
 
 
         ///FENETRE ACCUEIL//////////////////
+        ///On recupere les films depuis la base de donnée pour la affichage
         F1 = maconnexion.recupFilm("Avatar");
         F2 = maconnexion.recupFilm("Avengers: EndGame");
         F3 = maconnexion.recupFilm("Titanic");
@@ -723,6 +2234,7 @@ public class Fenetre {
         F7 = maconnexion.recupFilm("Jurassic World");
         F8 = maconnexion.recupFilm("The Dark Knight : Le Chevalier Noir");
 
+        ///On configure e=les labels permettant l'affichage
         JLabel nomF1 = new JLabel(F1.getNom(), JLabel.CENTER);
         JLabel nomF2 = new JLabel(F2.getNom(), JLabel.CENTER);
         JLabel nomF3 = new JLabel(F3.getNom(), JLabel.CENTER);
@@ -750,6 +2262,7 @@ public class Fenetre {
         JLabel descF7 = new JLabel("Synopsis : "+F7.getDesc(), JLabel.CENTER);
         JLabel descF8 = new JLabel("Synopsis : "+F8.getDesc(), JLabel.CENTER);
 
+        ///On va recuperer les images des films
         ImageIcon bordereau = new ImageIcon("Bordereau.png");
         JLabel logoAccueil = new JLabel(bordereau, JLabel.CENTER);
         ImageIcon imageF1 = new ImageIcon(F1.getImage());
@@ -772,7 +2285,7 @@ public class Fenetre {
         fenetreAcceuil.setLayout(new BorderLayout());
         fenetreAcceuil.setBackground(jaunePale);
         fenetreAcceuil.setBounds(0, 0,  1280, 1100);
-        fenetreAcceuil.setTitle("Cinema UGECE Paris");
+        fenetreAcceuil.setTitle("CineMax Paris");
         fenetreAcceuil.setResizable(true);
 
         cinema.setLayout(new GridBagLayout());
@@ -780,6 +2293,7 @@ public class Fenetre {
         gbc.weightx = 6;
         gbc.weighty = 5;
 
+        ///On configure les labels
         nomF1.setFont(new Font("Arial", Font.BOLD, 15));
         dureeF1.setFont(new Font("Arial", Font.BOLD, 15));
         nomF2.setFont(new Font("Arial", Font.BOLD, 15));
@@ -797,6 +2311,7 @@ public class Fenetre {
         nomF8.setFont(new Font("Arial", Font.BOLD, 15));
         dureeF8.setFont(new Font("Arial", Font.BOLD, 15));
 
+        ///OOn configure les boutons
         Seance1F1.setBackground(jaune);
         Seance1F1.setForeground(Color.BLACK);
         Seance1F1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
@@ -1026,33 +2541,7 @@ public class Fenetre {
         gbc.gridy = 4;
         cinema.add(dureeF8, gbc);
 
-        /*gbc.anchor = GridBagConstraints.SOUTHWEST;
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.ipadx = 200;
-        gbc.ipady = 15;
-        cinema.add(descF1, gbc);
-        gbc.gridx = 4;
-        gbc.gridy = 1;
-        cinema.add(descF2, gbc);
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        cinema.add(descF3, gbc);
-        gbc.gridx = 4;
-        gbc.gridy = 2;
-        cinema.add(descF4, gbc);
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        cinema.add(descF5, gbc);
-        gbc.gridx = 4;
-        gbc.gridy = 3;
-        cinema.add(descF6, gbc);
-        gbc.gridx = 1;
-        gbc.gridy = 4;
-        cinema.add(descF7, gbc);
-        gbc.gridx = 4;
-        gbc.gridy = 4;
-        cinema.add(descF8, gbc);*/
+        ///On configure les panels pour les boutons des seances
         Sfilm1.setLayout(new GridBagLayout());
         Sfilm2.setLayout(new GridBagLayout());
         Sfilm3.setLayout(new GridBagLayout());
@@ -1250,6 +2739,8 @@ public class Fenetre {
                 System.exit(0); // tout fermer												System.exit(0); // tout fermer
             }
         });
+
+        ///On configure tous les elements pour la fenetre de facture
         fenetreAcceuil.setVisible(false);
         fenetreFacture.setLayout(new BorderLayout());
         fenetreFacture.setBackground(jaunePale);
@@ -1280,9 +2771,10 @@ public class Fenetre {
         retour3.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         retour3.setFont(new Font("Arial", Font.BOLD, 20));
 
-
+        ///Si le client choisit la seance de 8h30 pour le premier film
         Seance1F1.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
+                ///On modifie l'affichage en fonction du client
                 ImageIcon imagetemp = new ImageIcon(F1.getImage());
                 imageF.setIcon(imagetemp);
                 nomF.setText(F1.getNom());
@@ -1355,6 +2847,7 @@ public class Fenetre {
                 gbc.ipady = 30;
                 gbc.anchor = GridBagConstraints.CENTER;
                 facture.add(acheter, gbc);
+                ///On ajoute les billets dans la BDD mais le nom du client va changer si le client est connecte ou non
                 if(testConnexion == true){
                     billetTemp.setNum(1 + (int)(Math.random() * ((100 - 1) + 1)));
                     billetTemp.setPrix(10);
@@ -1383,7 +2876,7 @@ public class Fenetre {
             }
 
         });
-
+        ///On reproduit le meme schema pour les 31 autres boutons
         Seance2F1.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
                 ImageIcon imagetemp = new ImageIcon(F1.getImage());
@@ -4579,6 +6072,7 @@ public class Fenetre {
 
 
         retour3.addActionListener(new ActionListener(){
+            ///On rend invisible la fenetre de facture
             public void actionPerformed(ActionEvent evt){
                 fenetreFacture.setVisible(false);
             }
@@ -4588,8 +6082,10 @@ public class Fenetre {
             public void actionPerformed(ActionEvent evt){
                 try {
                     for(int i=0; i<(int) nbBillets.getValue();i++){
+                        ///Si le client achete on ajoute les billets a la BDD
                         maconnexion.ecrireBillet(billetTemp.getNum(), billetTemp.getPrix(), billetTemp.getReduc(), billetTemp.getSeance(), billetTemp.getClient());
                         if(testConnexion == true){
+                            ///On ajoute les billets au client
                             clientMembre.setBillet(billetTemp);
                         }else{
                             client.setBillet(billetTemp);
@@ -4600,6 +6096,8 @@ public class Fenetre {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                ///On rend invisible la fenetre de facture
+                ///On affiche la fentre de confirmation d'achat
                 fenetreFacture.setVisible(false);
                 fenetreConfirmationAchat.setVisible(true);
             }

@@ -1,5 +1,5 @@
 package com.project;
-
+///Classe permettant de gerer les seances
 public class Séance {
     private int numSeance;
     private String horaireHeure;
@@ -7,9 +7,12 @@ public class Séance {
     private Film film;
     private Salle salle;
 
+    ///Constructeur par defaut
     public Séance(){
 
     }
+
+    ///Getters et Setters
     public int getNum(){
         return numSeance;
     }

@@ -1,14 +1,16 @@
 package com.project;
-
+///Classe client membre heritant de la classe client mais ayant une id et un mdp en plus
 public class ClientMembre extends Client{
     private String Id;
     private String Pw;
     private String categorie;
 
+    ///Constructeur par defaut
     public ClientMembre(){
 
     }
 
+    ///Getters et Setters
     public String getId(){
         return Id;
     }

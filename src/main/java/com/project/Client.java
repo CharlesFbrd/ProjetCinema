@@ -1,16 +1,18 @@
 package com.project;
 import java.util.*;
-
+///Classe permettant de gerer les clients invites
 public class Client {
     private String nom;
     private String prenom;
     private List<Billet> billets = new ArrayList();
 
+    ///Constructeur par defaut qui appelle le client Default User
     public Client(){
         this.nom = "Default";
         this.prenom = "User";
     }
 
+    ///Getters et Setters
     public String getNom(){
         return nom;
     }

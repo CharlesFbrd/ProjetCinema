@@ -1,5 +1,5 @@
 package com.project;
-
+///Classe permettant de creer les films
 public class Film {
     private String nom;
     private String dureeMinute;
@@ -7,10 +7,12 @@ public class Film {
     private String description;
     private String image;
 
+    ///Constructeur par defaut
     public Film(){
 
     }
 
+    ///Getters et Setters
     public String getNom(){
         return nom;
     }

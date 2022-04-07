@@ -1,5 +1,5 @@
 package com.project;
-
+///Classe permettant de creer les billets
 public class Billet {
     private int num;
     private int prix;
@@ -7,6 +7,7 @@ public class Billet {
     private String client;
     private int séance;
 
+    ///Constructeur surcharge
     public Billet(int num, int p, int r, int s, String c){
         this.num = num;
         this.reduction = r;
@@ -15,6 +16,7 @@ public class Billet {
         this.séance = s;
     }
 
+    ///Getters et Setters
     public int getNum(){
         return num;
     }
