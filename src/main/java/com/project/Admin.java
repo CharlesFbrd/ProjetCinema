@@ -7,34 +7,35 @@ public class Admin extends Client {
     private String PwAdmin;
     private String categorieA = "cAdmin";
 
-        public Admin(){
+    public Admin() {
 
     }
 
-        public String getId(){
-            return IdAdmin;
-        }
+    public String getId() {
+        return IdAdmin;
+    }
 
-        public String getPw(){
-            return PwAdmin;
-        }
+    public String getPw() {
+        return PwAdmin;
+    }
 
-        public String getCategorieA(){
-           return categorieA;
-        }
-
-
-        public void setId(String i){
-            IdAdmin = i;
-        }
-
-        public void setPw(String p){
-            PwAdmin = p;
-        }
+    public String getCategorieA() {
+        return categorieA;
+    }
 
 
-         public void setCategorieAdmin(String p){
-             categorieA = p;
-        }
+    public void setId(String i) {
+        IdAdmin = i;
+    }
+
+    public void setPw(String p) {
+        PwAdmin = p;
+    }
+
+
+    public void setCategorieAdmin(String p) {
+        categorieA = p;
+    }
+}
 
 
